@@ -218,7 +218,8 @@ public class LoginUPConsulta extends JFrame {
 				
 				
 				
-				
+				//HOLA AMIGOS DE TODO EL MUNDO
+				//ME LLEGAN AL PINCHO CSM
 				
 			
 				
