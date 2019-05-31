@@ -1,7 +1,8 @@
 
 use patronesTF
 
-
+--BASE DE DATOS UPConsulta
+--PRUEBA GITHUB
 
 create table Alumno(
 codigoAlumno varchar(20) primary key,
