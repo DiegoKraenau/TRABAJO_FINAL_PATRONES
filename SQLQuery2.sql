@@ -1,4 +1,5 @@
 
+CREATE DATABASE patronesTF
 use patronesTF
 
 --BASE DE DATOS UPConsulta
@@ -9,7 +10,7 @@ codigoAlumno varchar(20) primary key,
 contraseñaAlumno varchar(50),
 nombreAlumno varchar(50),
 )
-
+/*bbcita*/
 insert into Alumno values('u201710397','diego2009','Diego Kraenau')
 insert into Alumno values('u20171A154','rodolfo2009','Rodolfo Arias')
 insert into Alumno values('u201715840','miguel2009','Miguel Aspilcueta')
