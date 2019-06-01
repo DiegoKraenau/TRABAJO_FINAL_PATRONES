@@ -13,6 +13,7 @@ nombreAlumno varchar(50),
 /*bbcita*/
 /*bbcita2*/
 --CALLA CTM
+--CHINO KBRO
 insert into Alumno values('u201710397','diego2009','Diego Kraenau')
 insert into Alumno values('u20171A154','rodolfo2009','Rodolfo Arias')
 insert into Alumno values('u201715840','miguel2009','Miguel Aspilcueta')
