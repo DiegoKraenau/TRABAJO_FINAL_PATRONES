@@ -154,8 +154,6 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 	@Override
 	public void searchxCod(String cod) {
 		// TODO Auto-generated method stub
-
-		String loginA;
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;

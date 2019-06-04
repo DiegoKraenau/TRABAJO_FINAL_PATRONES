@@ -1,9 +1,13 @@
 package persistencia;
 
-public class AlumnoBean {
-	String codigoAlumno;
-	String contraseñaAlumno;
-	String nombreAlumno;
+import java.io.Serializable;
+
+public class AlumnoBean implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	public String codigoAlumno;
+	public String contraseñaAlumno;
+	public String nombreAlumno;
 	
 	public String getCodigoAlumno() {
 		return codigoAlumno;

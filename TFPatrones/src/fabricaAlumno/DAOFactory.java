@@ -1,24 +1,25 @@
 package fabricaAlumno;
 
-public interface DAOFactoryAlumno {
+public interface DAOFactory {
 	
 	public static final int MYSQL=1;
 	public static final int SQL=2;
 	public static final int Oracle=3;
 	
 	public abstract AlumnoDAO getAlumnoDAO();
+	public abstract CursoDAO getCursoDAO();
 	
-	public static DAOFactoryAlumno getDAOFactoryAlumno(int whichFactory){
+	public static DAOFactory getDAOFactory(int whichFactory){
 	       switch(whichFactory){
 	       
 	       	case MYSQL:
-	       	    return new MsqlDAOFActoryAlumno();
+	       	    return new MsqlDAOFActory();
 	       	  
 	       	case SQL:
-	       	    return  new SqlDAOFactoryAlumno();
+	       	    return  new SqlDAOFactory();
 	       	  
 	       	case Oracle:
-	       	    return  new OracleDAOFactoryAlumno();
+	       	    return  new OracleDAOFactory();
 	       	default:
 	       	    return null;
 	       }
