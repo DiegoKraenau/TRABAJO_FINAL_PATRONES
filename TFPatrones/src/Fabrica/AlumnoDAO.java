@@ -1,4 +1,4 @@
-package fabricaAlumno;
+package Fabrica;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package fabricaAlumno;
+package Fabrica;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

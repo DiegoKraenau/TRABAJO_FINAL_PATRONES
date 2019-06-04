@@ -1,4 +1,4 @@
-package fabricaAlumno;
+package Fabrica;
 
 public interface DAOFactory {
 	

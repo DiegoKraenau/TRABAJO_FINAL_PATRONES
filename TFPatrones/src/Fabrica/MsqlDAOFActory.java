@@ -1,6 +1,6 @@
-package fabricaAlumno;
+package Fabrica;
 
-public class SqlDAOFactory implements DAOFactory {
+public class MsqlDAOFActory implements DAOFactory {
 
 	@Override
 	public AlumnoDAO getAlumnoDAO() {
