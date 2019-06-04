@@ -14,4 +14,10 @@ public class MsqlDAOFActory implements DAOFactory {
 		return null;
 	}
 
+	@Override
+	public SedeDAO getSedeDAO() {
+		// TODO Auto-generated method stub
+		return new SedeDAOImplements();
+	}
+
 }

@@ -8,6 +8,7 @@ public interface DAOFactory {
 	
 	public abstract AlumnoDAO getAlumnoDAO();
 	public abstract CursoDAO getCursoDAO();
+	public abstract SedeDAO getSedeDAO();
 	
 	public static DAOFactory getDAOFactory(int whichFactory){
 	       switch(whichFactory){
