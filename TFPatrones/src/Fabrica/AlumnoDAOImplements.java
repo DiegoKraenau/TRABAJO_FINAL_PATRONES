@@ -84,37 +84,27 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 	@Override
 	public void update(AlumnoBean user) {
 		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String sql;
-		Connection con=getConnection();
-		Statement st=null;
-		int rs;
-		String loginA;
-		String passwordA;
-		String nombreA;
-		
+		Statement st;
+		int rs=0;
+		Connection con=null;
 		
 		try {
+			con=getConnection();
+			sql="Update Alumno set contraseñaAlumno='"+user.getContraseñaAlumno()+"', nombreAlumno='"+user.getNombreAlumno()+"' where codigoAlumno ='"+user.getCodigoAlumno()+"'";
 			st=con.createStatement();
-			System.out.println("Digite el nuevo 'Codigo' del Alumno:");
-			loginA=br.readLine();
-			System.out.println("Digite el nuevo 'Password' del Alumno:");
-			passwordA=br.readLine();
-			System.out.println("Digite el nuevo 'Nombre' del Alumno:");
-			nombreA=br.readLine();
-			sql="update Alumno set codigoAlumno='"+loginA+"',contraseñaAlumno='"+passwordA+"',nombreAlumno='"+nombreA+"' where codigoAlumno='"+user.getCodigoAlumno()+"'";
-			
 			rs=st.executeUpdate(sql);
-			
 			if(rs==1) {
-				//System.out.print(rs);
-				System.out.println("Se pudo modificar al Alumno");
-			
+				System.out.println("Se modifico Alumno.");
+			}else {
+				System.out.println("No se modifico Alumno.");
 			}
+			st.close();
+			con.close();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.print(e);
+			System.out.println("Ocurrió una excepcion al modificar"+e);
 		}
 		
 		
