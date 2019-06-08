@@ -99,8 +99,9 @@ public class LoginAlumno extends JFrame implements ActionListener {
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setBounds(10, 41, 26, 24);
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\usuarioLogo2.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("Imagenes\\usuarioLogo2.png"));
 		panel.add(lblNewLabel_1);
+	
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setForeground(Color.WHITE);
@@ -125,7 +126,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 				
 			}
 		});
-		btnNewButton.setSelectedIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\fondoBoton.png"));
+		btnNewButton.setSelectedIcon(new ImageIcon("Imagenes\\fondoBoton.png"));
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.setBackground(Color.DARK_GRAY);
 		
@@ -175,7 +176,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 		panel_1.add(btnElegirTaller);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\logoUPC4.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("Imagenes\\logoUPC4.png"));
 		lblNewLabel_2.setBounds(53, 215, 70, 94);
 		panel_1.add(lblNewLabel_2);
 		

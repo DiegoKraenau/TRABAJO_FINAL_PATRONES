@@ -56,7 +56,7 @@ public class LoginProfesor extends JFrame {
 		panel.add(label);
 		
 		JLabel label_1 = new JLabel("New label");
-		label_1.setIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\usuarioLogo2.png"));
+		label_1.setIcon(new ImageIcon("Imagenes\\usuarioLogo2.png"));
 		label_1.setBounds(10, 41, 26, 24);
 		panel.add(label_1);
 		
@@ -89,7 +89,7 @@ public class LoginProfesor extends JFrame {
 		panel_1.add(btnAgregarTallerVirtual);
 		
 		JLabel label_3 = new JLabel("");
-		label_3.setIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\logoUPC4.png"));
+		label_3.setIcon(new ImageIcon("Imagenes\\logoUPC4.png"));
 		label_3.setBounds(53, 215, 70, 94);
 		panel_1.add(label_3);
 	}

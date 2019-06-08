@@ -113,7 +113,7 @@ public class LoginUPConsulta extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("C:\\Users\\Aspire 5\\Desktop\\Practicando Programacion\\Practicando Java\\TFPatrones\\Imagenes\\logo3.png"));
+		label.setIcon(new ImageIcon("Imagenes\\logo3.png"));
 		label.setBounds(10, 84, 411, 287);
 		panel_1.add(label);
 		
@@ -197,7 +197,7 @@ public class LoginUPConsulta extends JFrame {
 						
 					}else if(rs2.next()){
 						codigoPrincipal=rs2.getString(1);
-						name=rs2.getString(2);
+						name=rs2.getString(3);
 						LoginProfesor d3=new LoginProfesor();
 						d3.show();
 						LoginUPConsulta.this.hide();
@@ -214,16 +214,6 @@ public class LoginUPConsulta extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
-				
-				
-				//HOLA AMIGOS DE TODO EL MUNDO
-				//ME LLEGAN AL PINCHO CSM
-				//AEA LLAMA
-				//QUE HAY LLAMAS
-				//Que hay llamas 2
-			
 				
 				
 			}
