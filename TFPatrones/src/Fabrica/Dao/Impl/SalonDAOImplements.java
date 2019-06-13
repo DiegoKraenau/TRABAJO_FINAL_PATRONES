@@ -1,4 +1,4 @@
-package Fabrica;
+package Fabrica.Dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
-import persistencia.CursoBean;
-import persistencia.SalonBean;
+import Fabrica.Dao.SalonDAO;
+import Persistencia.SalonBean;
 
 public class SalonDAOImplements implements SalonDAO {
 
@@ -20,7 +20,7 @@ public class SalonDAOImplements implements SalonDAO {
 	}
 	
 	@Override
-	public void InsertarSalon(SalonBean salon) {
+	public void save(SalonBean salon) {
 		String sql;
 		Statement st;
 		int rs=0;
@@ -49,27 +49,15 @@ public class SalonDAOImplements implements SalonDAO {
 
 	@Override
 	public void update(SalonBean salon) {
-		String sql;
-		Statement st;
-		int rs=0;
-		Connection con=null;
-		
 		try {
-			con=getConnection();
-			sql="Update Salon set disponibilidad='"+salon.getDisponibilidad()+"where codigoSalon ='"+salon.getCodigoSalon()+"'";
-			st=con.createStatement();
-			rs=st.executeUpdate(sql);
-			if(rs==1) {
-				System.out.println("Se modifico Salon.");
-			}else {
-				System.out.println("No se modifico Salon.");
-			}
-			st.close();
-			con.close();
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ocurrió una excepcion al modificar"+e);
+			Connection cn = getConnection();
+			String sql = "UPDATE Salon SET disponibilidad = '" + salon.disponibilidad + "' WHERE codigoSalon = '" + salon.codigoSalon + "'";
+			Statement stm= cn.createStatement();
+			stm.executeUpdate(sql);
+			stm.close();
+			cn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -100,7 +88,7 @@ public class SalonDAOImplements implements SalonDAO {
 	}
 
 	@Override
-	public SalonBean searchxCod(String cod) {
+	public SalonBean findById(String cod) {
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;
@@ -128,7 +116,7 @@ public class SalonDAOImplements implements SalonDAO {
 	}
 
 	@Override
-	public ArrayList<SalonBean> listarSalones() {
+	public ArrayList<SalonBean> findAll() {
 		ArrayList<SalonBean> lista = new ArrayList<SalonBean>();
 		SalonBean salon = null;
 		Connection con = null;

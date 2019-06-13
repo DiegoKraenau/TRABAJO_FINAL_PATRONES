@@ -1,25 +1,25 @@
 package Codigo;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import Formularios.LoginUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.RecomendacionDAO;
+import Persistencia.RecomendacionBean;
 
 public class Main {
 
 	public static void main(String[] args) {
+		RecomendacionBean recomendacion = new RecomendacionBean();
 		
-		// TODO Auto-generated method stub
+		DAOFactory fabrica = DAOFactory.getDAOFactory(2);
+		RecomendacionDAO dao = fabrica.getRecomendacionDAO();
 		
-		//String name;
+		recomendacion.setCodigoRecomendacion(4);
+		recomendacion.setCodigoAlumnoReco("u20171A154");
+		recomendacion.setCodigoProfesorReco("P001");
+		recomendacion.setCodigoCursoReco("C011");
+		recomendacion.setDescripcionReco("Es mala profesora");
+		recomendacion.setPuntuacion(2);
 		
-		
-		//System.out.print(LoginUPConsulta.name);
-		
-		
-
+		dao.delete("4");
 	}
 
 }

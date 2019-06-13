@@ -1,8 +1,7 @@
-package Fabrica;
+package Fabrica.Dao.Impl;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -10,7 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
-import persistencia.AlumnoBean;
+import Fabrica.Dao.AlumnoDAO;
+import Persistencia.AlumnoBean;
 
 public class AlumnoDAOImplements implements AlumnoDAO {
 	
@@ -22,7 +22,7 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 	
 
 	@Override
-	public void InsertarAlumno(AlumnoBean user) {
+	public void save(AlumnoBean user) {
 		// TODO Auto-generated method stub
 		String sql;
 		Statement st;
@@ -142,24 +142,23 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 	}
 
 	@Override
-	public void searchxCod(String cod) {
+	public AlumnoBean findById(String cod) {
 		// TODO Auto-generated method stub
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;
 		String sql;
-	
-		
+		AlumnoBean alumno = new AlumnoBean();
 		try {
 			st=con.createStatement();
 		
 			sql="select * from Alumno where codigoAlumno='"+cod+"'";
 			rs=st.executeQuery(sql);
 			if(rs.next()) {
+				alumno.setCodigoAlumno(rs.getString(1));
+				alumno.setContraseñaAlumno(rs.getString(2));
+				alumno.setNombreAlumno(rs.getString(3));
 				System.out.println("El alumno si existe.");
-				System.out.println(rs.getString(1));
-				System.out.println(rs.getString(2));
-				System.out.println(rs.getString(3));
 			}else {
 				System.out.println("El alumno no existe.");
 			}
@@ -170,13 +169,36 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 			System.out.print(e);
 		}
 		
-		
+		return alumno;
 	}
 
 	@Override
-	public ArrayList<AlumnoBean> listarUser(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<AlumnoBean> findAll() {
+		ArrayList<AlumnoBean> lista = new ArrayList<AlumnoBean>();
+		AlumnoBean alumno = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "Select * from Alumno";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				alumno = new AlumnoBean();
+				alumno.setCodigoAlumno(rs.getString("codigoAlumno"));
+				alumno.setContraseñaAlumno(rs.getString("contraseñaAlumno"));
+				alumno.setNombreAlumno(rs.getString("nombreAlumno"));
+				lista.add(alumno);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return lista;
 	}
 
 }

@@ -1,4 +1,4 @@
-package Fabrica;
+package Fabrica.Dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
-import persistencia.SedeBean;
+import Fabrica.Dao.SedeDAO;
+import Persistencia.SedeBean;
 
 public class SedeDAOImplements implements SedeDAO {
 
@@ -19,7 +20,7 @@ public class SedeDAOImplements implements SedeDAO {
 	}
 	
 	@Override
-	public void InsertarSede(SedeBean sede) {
+	public void save(SedeBean sede) {
 		String sql;
 		Statement st;
 		int rs=0;
@@ -48,7 +49,6 @@ public class SedeDAOImplements implements SedeDAO {
 	@Override
 	public void update(SedeBean sede) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class SedeDAOImplements implements SedeDAO {
 	}
 
 	@Override
-	public SedeBean searchxCod(String cod) {
+	public SedeBean findById(String cod) {
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;
@@ -103,7 +103,7 @@ public class SedeDAOImplements implements SedeDAO {
 	}
 
 	@Override
-	public ArrayList<SedeBean> listarSedes() {
+	public ArrayList<SedeBean> findAll() {
 		ArrayList<SedeBean> lista = new ArrayList<SedeBean>();
 		SedeBean sede = null;
 		Connection con = null;

@@ -1,4 +1,4 @@
-package Fabrica;
+package Fabrica.Dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
-import persistencia.CursoBean;
+import Fabrica.Dao.CursoDAO;
+import Persistencia.CursoBean;
 
 public class CursoDAOImplements implements CursoDAO {
 	
@@ -19,55 +20,30 @@ public class CursoDAOImplements implements CursoDAO {
 	}
 	
 	@Override
-	public void InsertarCurso(CursoBean curso) {
-		String sql;
-		Statement st;
-		int rs=0;
-		Connection con=null;
-		
+	public void save(CursoBean curso) {
 		try {
-			con=getConnection();
-			sql="insert into Curso values('"+curso.getCodigoCurso()+"','"+curso.getNombreCurso()+"')";
-			st=con.createStatement();
-			rs=st.executeUpdate(sql);
-			if(rs==1) {
-				System.out.println("Se agrego Curso.");
-			}else {
-				System.out.println("No se agrego Curso.");
-			}
-			st.close();
-			con.close();
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ocurrió una excepcion al insertar"+e);
+			Connection cn = getConnection();
+			String sql = "INSERT INTO Curso VALUES('"+curso.getCodigoCurso()+"','"+curso.getNombreCurso()+"')";
+			Statement stm= cn.createStatement();
+			stm.executeUpdate(sql);
+			stm.close();
+			cn.close();
+		}catch (Exception e) {
+			System.out.println("Ocurrió una excepcion al insertar " + e);
 		}
-		
 	}
 
 	@Override
 	public void update(CursoBean curso) {
-		String sql;
-		Statement st;
-		int rs=0;
-		Connection con=null;
-		
 		try {
-			con=getConnection();
-			sql="Update Curso set nombreCurso='"+curso.getNombreCurso()+"where codigoCurso ='"+curso.getCodigoCurso()+"'";
-			st=con.createStatement();
-			rs=st.executeUpdate(sql);
-			if(rs==1) {
-				System.out.println("Se modifico Curso.");
-			}else {
-				System.out.println("No se modifico Curso.");
-			}
-			st.close();
-			con.close();
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ocurrió una excepcion al modificar"+e);
+			Connection cn = getConnection();
+			String sql = "UPDATE Curso SET nombreCurso = '" + curso.nombreCurso + "' WHERE codigoCurso = '" + curso.codigoCurso + "'";
+			Statement stm= cn.createStatement();
+			stm.executeUpdate(sql);
+			stm.close();
+			cn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -96,7 +72,7 @@ public class CursoDAOImplements implements CursoDAO {
 	}
 
 	@Override
-	public CursoBean searchxCod(String cod) {
+	public CursoBean findById(String cod) {
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;
@@ -124,7 +100,7 @@ public class CursoDAOImplements implements CursoDAO {
 	}
 
 	@Override
-	public ArrayList<CursoBean> listarCursos() {
+	public ArrayList<CursoBean> findAll() {
 		ArrayList<CursoBean> lista = new ArrayList<CursoBean>();
 		CursoBean curso = null;
 		Connection con = null;

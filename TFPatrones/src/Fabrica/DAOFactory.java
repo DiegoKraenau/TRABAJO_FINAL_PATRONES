@@ -1,5 +1,12 @@
 package Fabrica;
 
+import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.RecomendacionDAO;
+import Fabrica.Dao.SalonDAO;
+import Fabrica.Dao.SedeDAO;
+
 public interface DAOFactory {
 	
 	public static final int MYSQL=1;
@@ -9,6 +16,9 @@ public interface DAOFactory {
 	public abstract AlumnoDAO getAlumnoDAO();
 	public abstract CursoDAO getCursoDAO();
 	public abstract SedeDAO getSedeDAO();
+	public abstract SalonDAO getSalonDAO();
+	public abstract ProfesorDAO getProfesorDAO();
+	public abstract RecomendacionDAO getRecomendacionDAO();
 	
 	public static DAOFactory getDAOFactory(int whichFactory){
 	       switch(whichFactory){

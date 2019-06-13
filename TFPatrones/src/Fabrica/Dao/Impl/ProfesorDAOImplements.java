@@ -1,4 +1,4 @@
-package Fabrica;
+package Fabrica.Dao.Impl;
 
 import java.sql.Statement;
 import java.io.BufferedReader;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
-import persistencia.ProfesorBean;
-import persistencia.SedeBean;
+import Fabrica.Dao.ProfesorDAO;
+import Persistencia.ProfesorBean;
 
 public class ProfesorDAOImplements implements ProfesorDAO {
 
@@ -22,7 +22,7 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 	}
 	
 	@Override
-	public void InsertarProfesor(ProfesorBean profesor) {
+	public void save(ProfesorBean profesor) {
 		String sql;
 		Statement st;
 		int rs=0;
@@ -116,24 +116,23 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 	}
 
 	@Override
-	public void searchxCod(String cod) {
+	public ProfesorBean findById(String cod) {
 		// TODO Auto-generated method stub
 		Connection con=getConnection();
 		Statement st=null;
 		ResultSet rs=null;
 		String sql;
-	
-		
+		ProfesorBean profesor = new ProfesorBean();
 		try {
 			st=con.createStatement();
 		
 			sql="select * from Profesor where codigoProfesor='"+cod+"'";
 			rs=st.executeQuery(sql);
 			if(rs.next()) {
+				profesor.setCodigoProfesor(rs.getString(1));
+				profesor.setContraseñaProfesor(rs.getString(2));
+				profesor.setNombreProfesor(rs.getString(3));
 				System.out.println("El profesor existe.");
-				System.out.println(rs.getString(1));
-				System.out.println(rs.getString(2));
-				System.out.println(rs.getString(3));
 			}else {
 				System.out.println("El Profesor no existe.");
 			}
@@ -143,10 +142,11 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			// TODO: handle exception
 			System.out.print(e);
 		}
+		return profesor;
 	}
 
 	@Override
-	public  ArrayList<ProfesorBean> listarProfesor() {
+	public  ArrayList<ProfesorBean> findAll() {
 		// TODO Auto-generated method stub
 		ArrayList<ProfesorBean> listaprofesor = new ArrayList<ProfesorBean>();
 		ProfesorBean profesor = null;
