@@ -83,7 +83,7 @@ codigoProfesor varchar(20) primary key,
 nombrePorfesor varchar(30),
 contraseñaProfesor varchar(40)
 )
-
+select* from Profesor
 insert into Profesor values('P001','Maritza Vilca','maritza2009')
 insert into Profesor values('P002','Sebastian Gimenez','sebastian2009')
 

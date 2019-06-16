@@ -57,7 +57,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 	 */
 	public LoginAlumno() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 854, 449);
+		setBounds(100, 100, 854, 450);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 69, 0));
 		contentPane.addMouseMotionListener(new MouseMotionAdapter() {

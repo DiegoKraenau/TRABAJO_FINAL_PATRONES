@@ -21,6 +21,12 @@ public class ConexionUPConsulta {
 		
 	}
 	
+	public static void main(String[] args) {
+		ConexionUPConsulta upc=new ConexionUPConsulta();
+		
+		upc.getConexion();
+		
+	}
 	
 	
 	

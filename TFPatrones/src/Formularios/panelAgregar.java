@@ -118,7 +118,7 @@ public class panelAgregar extends JPanel {
 				Statement s2;
 				ResultSet rs2;
 				
-				String sql2="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
+				String sql2="select nombrePorfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
 				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
 				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());
@@ -174,18 +174,18 @@ public class panelAgregar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String requisito=null;
 				String promedio=null;
-				requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
+				requisito="select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
 						"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
 				System.out.println(requisito);;
 				
 				if(comboBox.isEnabled()) {
-					requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
-							"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"' and nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+					requisito="select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
+							"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"' and nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
 				}
 				
 				promedio="select SUM(puntuacion)/COUNT(Recomendacion.codigoRecomendacion) from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
-						" where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+						" where Profesor.nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
 			
 					
 			

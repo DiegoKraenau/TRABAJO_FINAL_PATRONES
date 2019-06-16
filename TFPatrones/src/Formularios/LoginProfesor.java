@@ -12,10 +12,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.CardLayout;
+import com.toedter.calendar.JCalendar;
 
 public class LoginProfesor extends JFrame {
 
 	private JPanel contentPane;
+	panelTallerPresencial pa1=new panelTallerPresencial();
+	panelTallerVirtual pa2=new panelTallerVirtual();
+	
+	
 
 	/**
 	 * Launch the application.
@@ -26,6 +34,7 @@ public class LoginProfesor extends JFrame {
 				try {
 					LoginProfesor frame = new LoginProfesor();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,7 +47,7 @@ public class LoginProfesor extends JFrame {
 	 */
 	public LoginProfesor() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 738, 518);
+		setBounds(100, 100, 854, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,9 +81,22 @@ public class LoginProfesor extends JFrame {
 		panel_1.setBounds(0, 76, 190, 403);
 		contentPane.add(panel_1);
 		
+	
+	
+		
+		
 		JButton btnAgregarTallerPresencial = new JButton("Agregar Taller Presencial");
+		btnAgregarTallerPresencial.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			
+			}
+		});
 		btnAgregarTallerPresencial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pa1.setVisible(true);
+				pa2.setVisible(false);
 			}
 		});
 		btnAgregarTallerPresencial.setForeground(Color.WHITE);
@@ -82,7 +104,32 @@ public class LoginProfesor extends JFrame {
 		btnAgregarTallerPresencial.setBounds(0, 11, 190, 34);
 		panel_1.add(btnAgregarTallerPresencial);
 		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 69, 0));
+		panel_2.setBounds(189, 0, 649, 411);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(20, 21, 607, 366);
+		panel_2.add(panel_3);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
 		JButton btnAgregarTallerVirtual = new JButton("Agregar Taller Virtual");
+		btnAgregarTallerVirtual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel_3.add(pa2);
+				pa1.setVisible(false);
+				pa2.setVisible(true);
+			}
+		});
+		btnAgregarTallerVirtual.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+			}
+		});
 		btnAgregarTallerVirtual.setForeground(Color.WHITE);
 		btnAgregarTallerVirtual.setBackground(Color.DARK_GRAY);
 		btnAgregarTallerVirtual.setBounds(0, 45, 190, 34);
@@ -92,5 +139,20 @@ public class LoginProfesor extends JFrame {
 		label_3.setIcon(new ImageIcon("Imagenes\\logoUPC4.png"));
 		label_3.setBounds(53, 215, 70, 94);
 		panel_1.add(label_3);
+		
+		
+		
+		
+	
+		panel_3.add(pa1);
+		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(24, 48, 184, 153);
+		pa1.add(calendar);
+		
+		
+		
+		
+		
 	}
 }

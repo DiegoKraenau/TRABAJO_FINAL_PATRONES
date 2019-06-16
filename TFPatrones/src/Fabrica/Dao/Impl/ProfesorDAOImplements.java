@@ -67,7 +67,7 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			Passwordnew=br.readLine();
 			System.out.println("Digite el nuevo 'Nombre' del Profesor:");
 			Namenew=br.readLine();
-			sql="update Profesor set codigoProfesor='"+Codigonew+"',contraseñaProfesor='"+Passwordnew+"',nombreProfesor='"+Namenew+"' where codigoProfesor='"+profesor.getCodigoProfesor()+"'";
+			sql="update Profesor set codigoProfesor='"+Codigonew+"',contraseñaProfesor='"+Passwordnew+"',nombrePorfesor='"+Namenew+"' where codigoProfesor='"+profesor.getCodigoProfesor()+"'";
 			
 			rs=st.executeUpdate(sql);
 			

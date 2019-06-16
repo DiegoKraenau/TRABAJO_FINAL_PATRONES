@@ -111,7 +111,7 @@ public class panelElegirTaller extends JPanel {
 				Statement s2;
 				ResultSet rs2;
 				
-				String sql2="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
+				String sql2="select nombrePorfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
 				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
 				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());
@@ -152,7 +152,7 @@ public class panelElegirTaller extends JPanel {
 				ResultSet rs2;
 				
 				String sql2="select codigoSede2 from SedeProfesor inner join  Profesor on SedeProfesor.codigoProfesor3=Profesor.codigoProfesor\r\n" + 
-						"inner join Sede on SedeProfesor.codigoSede2=Sede.codigoSede where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+						"inner join Sede on SedeProfesor.codigoSede2=Sede.codigoSede where Profesor.nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
 				
 			
 				

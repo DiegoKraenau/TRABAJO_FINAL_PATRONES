@@ -182,7 +182,7 @@ public class agregarRecomendacion extends JFrame {
 				Statement s5;
 				ResultSet rs5;
 				
-				String sql5="select codigoProfesor from Profesor where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+				String sql5="select codigoProfesor from Profesor where Profesor.nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
 				
 			
 				
@@ -242,7 +242,7 @@ public class agregarRecomendacion extends JFrame {
 				Statement s2;
 				ResultSet rs2;
 				
-				String sql2="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
+				String sql2="select nombrePorfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
 				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
 				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());

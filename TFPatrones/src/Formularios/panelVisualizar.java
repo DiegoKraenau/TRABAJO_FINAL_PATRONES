@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class panelVisualizar extends JPanel {
 	private JTable table;
@@ -48,7 +49,7 @@ public class panelVisualizar extends JPanel {
 		Statement s2;
 		ResultSet rs2;
 		
-		String sql2="select codigoAlumnoReco,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Alumno on Recomendacion.codigoAlumnoReco=Alumno.codigoAlumno " + 
+		String sql2="select codigoAlumnoReco,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Alumno on Recomendacion.codigoAlumnoReco=Alumno.codigoAlumno " + 
 				"inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor " + 
 				"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso where Alumno.codigoAlumno='"+LoginUPConsulta.codigoPrincipal+"'";
 		
@@ -109,7 +110,7 @@ public class panelVisualizar extends JPanel {
 				Statement s2;
 				ResultSet rs2;
 				
-				String sql2="select codigoAlumnoReco,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Alumno on Recomendacion.codigoAlumnoReco=Alumno.codigoAlumno " + 
+				String sql2="select codigoAlumnoReco,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Alumno on Recomendacion.codigoAlumnoReco=Alumno.codigoAlumno " + 
 						"inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor " + 
 						"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso where Alumno.codigoAlumno='"+LoginUPConsulta.codigoPrincipal+"'";
 				

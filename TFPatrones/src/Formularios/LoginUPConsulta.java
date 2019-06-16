@@ -197,7 +197,7 @@ public class LoginUPConsulta extends JFrame {
 						
 					}else if(rs2.next()){
 						codigoPrincipal=rs2.getString(1);
-						name=rs2.getString(3);
+						name=rs2.getString(2);
 						LoginProfesor d3=new LoginProfesor();
 						d3.show();
 						LoginUPConsulta.this.hide();
