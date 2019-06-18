@@ -2,7 +2,6 @@
 use patronesTF
 
 
-
 create table Alumno(
 codigoAlumno varchar(20) primary key,
 contraseñaAlumno varchar(50),
@@ -83,7 +82,8 @@ codigoProfesor varchar(20) primary key,
 nombrePorfesor varchar(30),
 contraseñaProfesor varchar(40)
 )
-select* from Profesor
+
+
 insert into Profesor values('P001','Maritza Vilca','maritza2009')
 insert into Profesor values('P002','Sebastian Gimenez','sebastian2009')
 
@@ -101,6 +101,7 @@ constraint tk foreign key (codigoCurso3) references Curso(codigoCurso)
 
 insert into ProfesorCurso values ('P001','C011')
 insert into ProfesorCurso values ('P002','C011')
+insert into ProfesorCurso values ('P002','C008')
 
 
 
@@ -119,12 +120,6 @@ constraint fk_6 foreign key (codigoProfesorReco) references Profesor(codigoProfe
 constraint fk_7  foreign key (codigoCursoReco) references Curso(codigoCurso)
 )
 
-
-select descripcionReco from Recomendacion where codigoRecomendacion=1
-
-select SUM(puntuacion)/COUNT(Recomendacion.codigoRecomendacion) from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor
-where Profesor.nombrePorfesor='Maritza Vilca'
-select SUM(puntuacion)/COUNT(Recomendacion.codigoRecomendacion) from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor where Profesor.nombrePorfesor='Maritza Vilca'
 
 
 
@@ -165,15 +160,37 @@ insert into SedeProfesor values('P001','Monterrico')
 
 
 
-select codigoSede2 from SedeProfesor inner join  Profesor on SedeProfesor.codigoProfesor3=Profesor.codigoProfesor
-inner join Sede on SedeProfesor.codigoSede2=Sede.codigoSede where Profesor.nombrePorfesor='Maritza Vilca'
 
-create table TallerPresencial(
-codigoTallerP int  not null IDENTITY(1,1) ,
-aula varchar(20),
-PRIMARY KEY(codigoTallerP)
+create table Aula(
+codigoAula varchar(20),
+aforoAula int,
+
+PRIMARY KEY(codigoAula)
 )
 
+insert into Aula values('H205',40)
+
+
+
+create table AulaSede(
+codigoAula2 varchar(20),
+codigoSede3 varchar(20),
+nombreDia varchar(20),
+hora time,
+fin time,
+estado bit,
+nombrePro varchar(60)  NULL,
+nombreCur varchar(30) NULL,
+
+
+FOREIGN KEY (codigoAula2) references Aula(codigoAula),
+FOREIGN KEY (codigoSede3) references Sede(codigoSede)
+
+)
+
+insert into AulaSede values('H205','Villa','Lunes','8:00','10:00',1,NULL,NULL)
+insert into AulaSede values('H205','Monterrico','Martes','8:00','10:00',1,NULL,NULL)
+insert into AulaSede values('H205','San Miguel','Miercoles','9:00','11:00',1,NULL,NULL)
 
 
 
@@ -187,17 +204,6 @@ PRIMARY KEY(codigoTallerP)
 
 
 
-
-
-select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor
-inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso where nombreCurso='Contabilidad'
-
-select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor
-inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso where nombreCurso='Contabilidad'
-
-select codigoAlumnoReco,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Alumno on Recomendacion.codigoAlumnoReco=Alumno.codigoAlumno
-inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor 
-inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso where Alumno.codigoAlumno='u201710397'
 
 
 

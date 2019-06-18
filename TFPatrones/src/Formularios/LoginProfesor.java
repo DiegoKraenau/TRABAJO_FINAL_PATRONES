@@ -146,9 +146,7 @@ public class LoginProfesor extends JFrame {
 	
 		panel_3.add(pa1);
 		
-		JCalendar calendar = new JCalendar();
-		calendar.setBounds(24, 48, 184, 153);
-		pa1.add(calendar);
+		
 		
 		
 		
