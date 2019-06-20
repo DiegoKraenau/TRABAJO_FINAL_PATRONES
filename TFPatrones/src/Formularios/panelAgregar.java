@@ -10,6 +10,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Codigo.ConexionUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Persistencia.CursoBean;
+import Persistencia.ProfesorBean;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -17,6 +23,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 
@@ -51,29 +58,16 @@ public class panelAgregar extends JPanel {
 		comboBox_1.setEnabled(false);
 		
 		//-----------CONECTANDO CURSO----------------
-		ConexionUPConsulta conexionupc=new ConexionUPConsulta();
-		Connection pruebaCn =conexionupc.getConexion();
 		
-		Statement s;
-		ResultSet rs;
+		List<CursoBean> cursos;
 		
-		String sql="select nombreCurso from Alumno inner join AlumnoCurso on Alumno.codigoAlumno=AlumnoCurso.codigoAlumno2 "+
-		"inner join Curso on Curso.codigoCurso=AlumnoCurso.codigoCurso2 where Alumno.codigoAlumno='"+LoginUPConsulta.codigoPrincipal+"'";
+		DAOFactory fabrica = DAOFactory.getDAOFactory(2);
+		CursoDAO dao1 = fabrica.getCursoDAO();
 		
+		cursos = dao1.findByAlumno(LoginUPConsulta.codigoPrincipal);
 		
-		
-		try {
-			s=(Statement)pruebaCn.createStatement();
-			rs=((java.sql.Statement)s).executeQuery(sql);
-			
-			while(rs.next()) {
-				comboBox.addItem(rs.getString(1));
-			}
-			
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		for (CursoBean cursoBean : cursos) {
+			comboBox.addItem(cursoBean.nombreCurso);
 		}
 		
 		
@@ -111,30 +105,15 @@ public class panelAgregar extends JPanel {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				comboBox_1.setEnabled(true);
-				ConexionUPConsulta conexionupc2=new ConexionUPConsulta();
-				Connection pruebaCn2 =conexionupc.getConexion();
+				ProfesorDAO dao2 = fabrica.getProfesorDAO();
 				
-				Statement s2;
-				ResultSet rs2;
+				List<ProfesorBean> profesores = dao2.findByCurso(comboBox.getSelectedItem().toString());
 				
-				String sql2="select nombrePorfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
-				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
-				
-				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());
-				
-				try {
-					s2=(Statement)pruebaCn.createStatement();
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					
-					while(rs2.next()) {
-						comboBox_1.addItem(rs2.getString(1));
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				for (ProfesorBean profesorBean : profesores) {
+					comboBox_1.addItem(profesorBean.nombreProfesor);
 				}
+				
+				comboBox_1.setEnabled(true);
 				
 				
 			}
@@ -174,37 +153,35 @@ public class panelAgregar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String requisito=null;
 				String promedio=null;
-				requisito="select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
+				requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
 						"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
 				System.out.println(requisito);;
 				
 				if(comboBox.isEnabled()) {
-					requisito="select codigoRecomendacion,nombrePorfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
-							"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"' and nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
+					requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
+							"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"' and nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
 				}
 				
 				promedio="select SUM(puntuacion)/COUNT(Recomendacion.codigoRecomendacion) from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
-						" where Profesor.nombrePorfesor='"+comboBox_1.getSelectedItem()+"'";
-			
-					
-			
+						" where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+
 				
 				
 				try {
 					
 					ConexionUPConsulta conexionupc3=new ConexionUPConsulta();
-					Connection pruebaCn3 =conexionupc.getConexion();
+					Connection pruebaCn3 =conexionupc3.getConexion();
 					
 					ConexionUPConsulta conexionupc_4=new ConexionUPConsulta();
-					Connection pruebaCn_4 =conexionupc.getConexion();
+					Connection pruebaCn_4 =conexionupc_4.getConexion();
 					
 					Statement s3;
 					ResultSet rs3;
 					Statement s_4;
 					ResultSet rs_4;
 					
-					s3=(Statement)pruebaCn.createStatement();
+					s3=(Statement)pruebaCn3.createStatement();
 					rs3=s3.executeQuery(requisito);
 					
 					s_4=(Statement)pruebaCn_4.createStatement();

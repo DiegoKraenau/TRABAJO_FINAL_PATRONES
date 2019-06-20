@@ -67,7 +67,7 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			Passwordnew=br.readLine();
 			System.out.println("Digite el nuevo 'Nombre' del Profesor:");
 			Namenew=br.readLine();
-			sql="update Profesor set codigoProfesor='"+Codigonew+"',contraseñaProfesor='"+Passwordnew+"',nombrePorfesor='"+Namenew+"' where codigoProfesor='"+profesor.getCodigoProfesor()+"'";
+			sql="update Profesor set codigoProfesor='"+Codigonew+"',contraseñaProfesor='"+Passwordnew+"',nombreProfesor='"+Namenew+"' where codigoProfesor='"+profesor.getCodigoProfesor()+"'";
 			
 			rs=st.executeUpdate(sql);
 			
@@ -160,6 +160,69 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			rs = pr.executeQuery();
 			while(rs.next()){
 				profesor = new ProfesorBean();
+				profesor.setCodigoProfesor(rs.getString("codigoProfesor"));
+				listaprofesor.add(profesor);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return listaprofesor;
+	}
+
+	@Override
+	public boolean ValidarLogin(ProfesorBean user) {
+		// TODO Auto-generated method stub
+		boolean res = false;
+		String sql=null;
+		
+		
+		ResultSet rs=null;
+		Statement st=null;
+		Connection con=getConnection();
+		
+		try {
+			
+			sql="select *from Profesor where codigoProfesor='"+user.getCodigoProfesor()+"'";
+			st=con.createStatement();
+			rs=st.executeQuery(sql);
+			
+		    if(rs.next()) {
+		    	res = true;
+		    }else {
+		    	res = false;
+		    }
+		    st.close();
+		    con.close();
+	
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print("No se puede conectar"+e);
+		}
+		
+		return res;
+	}
+
+	@Override
+	public ArrayList<ProfesorBean> findByCurso(String Curso) {
+		ArrayList<ProfesorBean> listaprofesor = new ArrayList<ProfesorBean>();
+		ProfesorBean profesor = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "select * from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 " + 
+					"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso= '"+Curso+"'";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				profesor = new ProfesorBean();
+				profesor.setNombreProfesor(rs.getString("nombreProfesor"));
 				profesor.setCodigoProfesor(rs.getString("codigoProfesor"));
 				listaprofesor.add(profesor);
 			}

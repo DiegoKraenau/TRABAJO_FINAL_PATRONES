@@ -49,8 +49,9 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 	}
 
 	@Override
-	public void ValidarLogin(AlumnoBean user) {
+	public boolean ValidarLogin(AlumnoBean user) {
 		// TODO Auto-generated method stub
+		boolean res=false;
 		String sql=null;
 		
 		
@@ -65,20 +66,18 @@ public class AlumnoDAOImplements implements AlumnoDAO {
 			rs=st.executeQuery(sql);
 			
 		    if(rs.next()) {
-		    	JOptionPane.showMessageDialog(null, "Existe el alumno");
+		    	res=true;
 		    }else {
-		    	JOptionPane.showMessageDialog(null, "No existe el alumno");
+		    	res=false;
 		    }
 		    st.close();
 		    con.close();
 	
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.print("No se puede conectar"+e);
 		}
-		
-		
+		return res;
 	}
 
 	@Override

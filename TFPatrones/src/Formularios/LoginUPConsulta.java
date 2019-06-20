@@ -9,7 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Codigo.ConexionUPConsulta;
-
+import Fabrica.DAOFactory;
+import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.RecomendacionDAO;
+import Persistencia.AlumnoBean;
+import Persistencia.ProfesorBean;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -155,68 +160,38 @@ public class LoginUPConsulta extends JFrame {
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				ConexionUPConsulta conexionUPC=new ConexionUPConsulta();
-				Connection pruebaCn=conexionUPC.getConexion();
+				AlumnoBean alumno = new AlumnoBean();
+				alumno.setCodigoAlumno(textField.getText());
+				alumno.setContraseñaAlumno(passwordField.getText());
+				ProfesorBean profesor = new ProfesorBean();
+				profesor.setCodigoProfesor(textField.getText());
+				profesor.setContraseñaProfesor(passwordField.getText());
 				
-				Statement s2;
-				Statement s;
-				
-				ResultSet rs;
-				ResultSet rs2;
-				
-				String sql="select* from Alumno where codigoAlumno='"+textField.getText()+"' and contraseñaAlumno='"+passwordField.getText()+"'";
-				String sql2="select* from Profesor where codigoProfesor='"+textField.getText()+"' and contraseñaProfesor='"+passwordField.getText()+"'";
-				
-				/*
-				try {
-					s2=(Statement)pruebaCn.createStatement();
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					JOptionPane.showMessageDialog(null, "Profesor");
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			    */
+				DAOFactory fabrica = DAOFactory.getDAOFactory(2);
+				AlumnoDAO dao1 = fabrica.getAlumnoDAO();
+				ProfesorDAO dao2 = fabrica.getProfesorDAO();
 			
-				try {
-					s=(Statement)pruebaCn.createStatement();
-					s2=(Statement)pruebaCn.createStatement();
-					rs=((java.sql.Statement)s).executeQuery(sql);
-					//rs2=((java.sql.Statement)s).executeQuery(sql2);
-					
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					
-					if(rs.next()) {
-						
-						codigoPrincipal=rs.getString(1);
-						name=rs.getString(3);
+				if(dao1.ValidarLogin(alumno)) {
+						alumno=dao1.findById(alumno.codigoAlumno);
+						codigoPrincipal=alumno.codigoAlumno;
+						name=alumno.nombreAlumno;
 						LoginAlumno d2=new LoginAlumno();
 						d2.setUndecorated(true);
 						d2.show();
 						LoginUPConsulta.this.hide();
 						
-					}else if(rs2.next()){
-						codigoPrincipal=rs2.getString(1);
-						name=rs2.getString(2);
+				}else if(dao2.ValidarLogin(profesor)){
+						profesor=dao2.findById(profesor.codigoProfesor);
+						codigoPrincipal=profesor.codigoProfesor;
+						name=profesor.nombreProfesor;
 						LoginProfesor d3=new LoginProfesor();
 						d3.show();
 						LoginUPConsulta.this.hide();
-					}else {
+				}else {
 						JOptionPane.showMessageDialog(null, "Contraseña Incorrecta");
-					}
-					
-					
-					
-					//JOptionPane.showMessageDialog(null, name);
-					
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-				
-				
 			}
 		});
 	}
 }
+

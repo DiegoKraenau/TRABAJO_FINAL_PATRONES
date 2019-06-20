@@ -1,4 +1,3 @@
-
 use patronesTF
 
 
@@ -18,11 +17,9 @@ insert into Alumno values('u2017b079','diego2009','Diego Hilario')
 insert into Alumno values('201613518','guillermo2009','Guillermo Rosales')
 
 
-
-
 create table Curso(
 codigoCurso varchar(20) primary key,
-nombreCurso varchar(30)
+nombreCurso varchar(50)
 )
 
 insert into Curso values('C001','Base de Datos')
@@ -79,7 +76,7 @@ insert into AlumnoCurso values('u201621893','C011')
 
 create table Profesor(
 codigoProfesor varchar(20) primary key,
-nombrePorfesor varchar(30),
+nombreProfesor varchar(30),
 contraseñaProfesor varchar(40)
 )
 
@@ -114,14 +111,12 @@ codigoCursoReco varchar(20),
 descripcionReco varchar(100),
 puntuacion int,
 
+
 PRIMARY KEY(codigoRecomendacion),
 constraint fk_5 foreign key (codigoAlumnoReco) references Alumno(codigoAlumno),
 constraint fk_6 foreign key (codigoProfesorReco) references Profesor(codigoProfesor),
 constraint fk_7  foreign key (codigoCursoReco) references Curso(codigoCurso)
 )
-
-
-
 
 
 insert into Recomendacion values('u201710397','P001','C011','Mala Profesora',3)
@@ -191,8 +186,6 @@ FOREIGN KEY (codigoSede3) references Sede(codigoSede)
 insert into AulaSede values('H205','Villa','Lunes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','Monterrico','Martes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','San Miguel','Miercoles','9:00','11:00',1,NULL,NULL)
-
-
 
 
 

@@ -170,7 +170,7 @@ public class verRecomendacion extends JFrame {
 		Statement s4;
 		ResultSet rs4;
 		
-		String sql="select nombrePorfesor from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
+		String sql="select nombreProfesor from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
 				" where Recomendacion.codigoRecomendacion="+panelAgregar.num;
 		String sql2="select nombreCurso from Recomendacion inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso" + 
 				" where Recomendacion.codigoRecomendacion="+panelAgregar.num;

@@ -134,4 +134,36 @@ public class RecomendacionDAOImplements implements RecomendacionDAO{
 		return lista;
 	}
 
+	@Override
+	public ArrayList<RecomendacionBean> findByProfesor_Curso(String profesor, String Curso) {
+		ArrayList<RecomendacionBean> lista = new ArrayList<RecomendacionBean>();
+		RecomendacionBean recomendacion = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "Select * from Recomendacion";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				recomendacion = new RecomendacionBean();
+				recomendacion.setCodigoRecomendacion(rs.getInt("codigoRecomendacion"));
+				recomendacion.setCodigoAlumnoReco(rs.getString("codigoAlumnoReco"));
+				recomendacion.setCodigoProfesorReco(rs.getString("profesorReco"));
+				recomendacion.setCodigoCursoReco(rs.getString("cursoReco"));
+				recomendacion.setDescripcionReco(rs.getString("descripcionReco"));
+				recomendacion.setPuntuacion(rs.getInt("puntuacion"));
+				lista.add(recomendacion);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return lista;
+	}
+
 }
