@@ -155,4 +155,32 @@ public class CursoDAOImplements implements CursoDAO {
 		}
 		return lista;
 	}
+
+    public CursoBean findByNombre(String nombre) {
+    	
+    	Connection con=getConnection();
+		Statement st=null;
+		ResultSet rs=null;
+		String sql;
+		CursoBean curso = new CursoBean();
+		try {
+			st=con.createStatement();
+		
+			sql="select * from Curso where nombreCurso='"+nombre+"'";
+			rs=st.executeQuery(sql);
+			if(rs.next()) {
+				curso.setCodigoCurso(rs.getString(1));
+				curso.setNombreCurso(rs.getString(2));
+				System.out.println("El Curso si existe.");
+				
+			}else {
+				System.out.println("El Curso no existe.");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return curso;
+    }
+
 }

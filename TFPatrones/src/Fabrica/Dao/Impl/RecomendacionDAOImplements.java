@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
 import Fabrica.Dao.RecomendacionDAO;
+import Formularios.LoginUPConsulta;
 import Persistencia.RecomendacionBean;
 
 public class RecomendacionDAOImplements implements RecomendacionDAO{
@@ -143,15 +144,20 @@ public class RecomendacionDAOImplements implements RecomendacionDAO{
 		ResultSet rs = null;
 		try {
 			con=getConnection();
-			String sql = "Select * from Recomendacion";
+			String sql = "Select * from Recomendacion "
+					+ "inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor "
+					+ "inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "
+					+ "where nombreProfesor='"+profesor+"' "
+					+ "and nombreCurso='"+Curso+"'";
+			
 			pr = con.prepareStatement(sql);
 			rs = pr.executeQuery();
 			while(rs.next()){
 				recomendacion = new RecomendacionBean();
 				recomendacion.setCodigoRecomendacion(rs.getInt("codigoRecomendacion"));
 				recomendacion.setCodigoAlumnoReco(rs.getString("codigoAlumnoReco"));
-				recomendacion.setCodigoProfesorReco(rs.getString("profesorReco"));
-				recomendacion.setCodigoCursoReco(rs.getString("cursoReco"));
+				recomendacion.setCodigoProfesorReco(rs.getString("codigoProfesorReco"));
+				recomendacion.setCodigoCursoReco(rs.getString("codigoCursoReco"));
 				recomendacion.setDescripcionReco(rs.getString("descripcionReco"));
 				recomendacion.setPuntuacion(rs.getInt("puntuacion"));
 				lista.add(recomendacion);
@@ -165,5 +171,88 @@ public class RecomendacionDAOImplements implements RecomendacionDAO{
 		}
 		return lista;
 	}
+
+	@Override
+	public String findPromedio(String profesor, String Curso,int num) {
+		// TODO Auto-generated method stub
+		ArrayList<RecomendacionBean> lista = new ArrayList<RecomendacionBean>();
+		RecomendacionBean recomendacion = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "Select * from Recomendacion "
+					+ "inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor "
+					+ "inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "
+					+ "where nombreProfesor='"+profesor+"' "
+					+ "and nombreCurso='"+Curso+"'";
+			
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				recomendacion = new RecomendacionBean();
+				recomendacion.setCodigoRecomendacion(rs.getInt("codigoRecomendacion"));
+				recomendacion.setCodigoAlumnoReco(rs.getString("codigoAlumnoReco"));
+				recomendacion.setCodigoProfesorReco(rs.getString("codigoProfesorReco"));
+				recomendacion.setCodigoCursoReco(rs.getString("codigoCursoReco"));
+				recomendacion.setDescripcionReco(rs.getString("descripcionReco"));
+				recomendacion.setPuntuacion(rs.getInt("puntuacion"));
+				lista.add(recomendacion);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		
+		int suma=0;
+		for (RecomendacionBean recomendacionBean : lista) {
+			suma=suma+recomendacionBean.getPuntuacion();
+		}
+		return Integer.toString(suma/num);
+	}
+
+	@Override
+	public ArrayList<RecomendacionBean> findRecomendacionAlumno(String codigo) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<RecomendacionBean> lista = new ArrayList<RecomendacionBean>();
+		RecomendacionBean recomendacion = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "Select * from Recomendacion where codigoAlumnoReco='"+LoginUPConsulta.codigoPrincipal+"'";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				recomendacion = new RecomendacionBean();
+				recomendacion.setCodigoRecomendacion(rs.getInt(1));
+				recomendacion.setCodigoAlumnoReco(rs.getString(2));
+				recomendacion.setCodigoProfesorReco(rs.getString(3));
+				recomendacion.setCodigoCursoReco(rs.getString(4));
+				recomendacion.setDescripcionReco(rs.getString(5));
+				recomendacion.setPuntuacion(rs.getInt(6));
+				lista.add(recomendacion);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return lista;
+		
+		
+		
+	}
+
+
+
 
 }

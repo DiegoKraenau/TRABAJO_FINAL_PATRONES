@@ -6,4 +6,6 @@ import Persistencia.CursoBean;
 
 public interface CursoDAO extends CrudDAO<CursoBean>{
 	public ArrayList<CursoBean> findByAlumno(String alumno_id);
+	public CursoBean findByNombre(String nombre);
+	
 }

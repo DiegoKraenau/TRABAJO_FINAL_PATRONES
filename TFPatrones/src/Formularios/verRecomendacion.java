@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Codigo.ConexionUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.RecomendacionDAO;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -144,73 +148,27 @@ public class verRecomendacion extends JFrame {
 		
 		//CONECTAR TODO
 		
+		DAOFactory factory=DAOFactory.getDAOFactory(2);
+		RecomendacionDAO dao1=factory.getRecomendacionDAO();
+		ProfesorDAO dao2=factory.getProfesorDAO();
+		CursoDAO dao3=factory.getCursoDAO();
+		
+		label.setText(Integer.toString(dao1.findById(panelAgregar.num).getCodigoRecomendacion()));
+		
+		String var=null;
+		var=dao1.findById(panelAgregar.num).getCodigoProfesorReco();
+		label_1.setText(dao2.findById(var).getContraseñaProfesor());
+		
+		
+		String var1=null;
+		var1=dao1.findById(panelAgregar.num).getCodigoCursoReco();
+		label_2.setText(dao3.findById(var1).getNombreCurso());
+		
+		label_3.setText(Integer.toString(dao1.findById(panelAgregar.num).getPuntuacion()));
+		
+		lblNewLabel_1.setText(dao1.findById(panelAgregar.num).getDescripcionReco());
+		
 		
 	
-		ConexionUPConsulta conexionupc=new ConexionUPConsulta();
-		Connection pruebaCn =conexionupc.getConexion();
-		
-		ConexionUPConsulta conexionupc2=new ConexionUPConsulta();
-		Connection pruebaCn2 =conexionupc2.getConexion();
-		
-		ConexionUPConsulta conexionupc3=new ConexionUPConsulta();
-		Connection pruebaCn3 =conexionupc3.getConexion();
-		
-		ConexionUPConsulta conexionupc4=new ConexionUPConsulta();
-		Connection pruebaCn4 =conexionupc4.getConexion();
-		
-		Statement s;
-		ResultSet rs;
-		
-		Statement s2;
-		ResultSet rs2;
-		
-		Statement s3;
-		ResultSet rs3;
-		
-		Statement s4;
-		ResultSet rs4;
-		
-		String sql="select nombreProfesor from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
-				" where Recomendacion.codigoRecomendacion="+panelAgregar.num;
-		String sql2="select nombreCurso from Recomendacion inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso" + 
-				" where Recomendacion.codigoRecomendacion="+panelAgregar.num;
-		String sql3="select puntuacion from Recomendacion where codigoRecomendacion="+panelAgregar.num;
-		String sql4="select descripcionReco from Recomendacion where codigoRecomendacion="+panelAgregar.num;
-		
-		
-		try {
-			s=(Statement)pruebaCn.createStatement();
-			rs=((java.sql.Statement)s).executeQuery(sql);
-			
-			s2=(Statement)pruebaCn2.createStatement();
-			rs2=((java.sql.Statement)s2).executeQuery(sql2);
-			
-			s3=(Statement)pruebaCn3.createStatement();
-			rs3=((java.sql.Statement)s3).executeQuery(sql3);
-			
-			s4=(Statement)pruebaCn4.createStatement();
-			rs4=((java.sql.Statement)s4).executeQuery(sql4);
-			
-			
-			if(rs.next()) {
-				label.setText(panelAgregar.num);
-				label_1.setText(rs.getString(1));
-				
-			}
-			if(rs2.next()) {
-				label_2.setText(rs2.getString(1));
-			}
-			if(rs3.next()) {
-				label_3.setText(rs3.getString(1));
-			}
-			if(rs4.next()) {
-				lblNewLabel_1.setText(rs4.getString(1));
-			}
-			
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 }

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import Codigo.ConexionUPConsulta;
 import Fabrica.Dao.ProfesorDAO;
+import Persistencia.CursoBean;
 import Persistencia.ProfesorBean;
 
 public class ProfesorDAOImplements implements ProfesorDAO {
@@ -234,6 +235,36 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			System.out.print(e);
 		}
 		return listaprofesor;
+	}
+
+	@Override
+	public ProfesorBean findByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		
+		
+		Connection con=getConnection();
+		Statement st=null;
+		ResultSet rs=null;
+		String sql;
+		ProfesorBean profesor = new ProfesorBean();
+		try {
+			st=con.createStatement();
+		
+			sql="select * from Profesor where nombreProfesor='"+nombre+"'";
+			rs=st.executeQuery(sql);
+			if(rs.next()) {
+				profesor.setCodigoProfesor(rs.getString(1));
+				profesor.setNombreProfesor(rs.getString(2));
+			//	System.out.println("El profesor si existe.");
+				
+			}else {
+				//System.out.println("El profesor no existe.");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return profesor;
 	}
 
 }

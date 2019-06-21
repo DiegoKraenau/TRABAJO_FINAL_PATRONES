@@ -8,6 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Codigo.ConexionUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.RecomendacionDAO;
+import Persistencia.CursoBean;
+import Persistencia.ProfesorBean;
+import Persistencia.RecomendacionBean;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +27,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
@@ -103,31 +112,21 @@ public class agregarRecomendacion extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(165, 44, 87, 20);
 		contentPane.add(comboBox);
+		
+		
 		//------------CONECTAR CURSOS---------------
-		ConexionUPConsulta conexionupc=new ConexionUPConsulta();
-		Connection pruebaCn =conexionupc.getConexion();
 		
-		Statement s;
-		ResultSet rs;
-		
-		String sql="select nombreCurso from Alumno inner join AlumnoCurso on Alumno.codigoAlumno=AlumnoCurso.codigoAlumno2 "+
-		"inner join Curso on Curso.codigoCurso=AlumnoCurso.codigoCurso2 where Alumno.codigoAlumno='"+LoginUPConsulta.codigoPrincipal+"'";
-		
-		
-		
-		try {
-			s=(Statement)pruebaCn.createStatement();
-			rs=((java.sql.Statement)s).executeQuery(sql);
-			
-			while(rs.next()) {
-				comboBox.addItem(rs.getString(1));
-			}
-			
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		DAOFactory fabrica = DAOFactory.getDAOFactory(2);
+		CursoDAO dao1 = fabrica.getCursoDAO();
+		ArrayList<CursoBean> listadoCurso=new ArrayList<CursoBean>();
+		listadoCurso=dao1.findByAlumno(LoginUPConsulta.codigoPrincipal);
+		for (CursoBean cursoBean : listadoCurso) {
+			comboBox.addItem(cursoBean.getNombreCurso());
 		}
+		
+		
+		
+
 		
 		//----------------------------
 		
@@ -149,79 +148,35 @@ public class agregarRecomendacion extends JFrame {
 		btnNewButton.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				DAOFactory fabrica=DAOFactory.getDAOFactory(2);
+				CursoDAO dao1=fabrica.getCursoDAO();
+				ProfesorDAO dao2=fabrica.getProfesorDAO();
+				RecomendacionDAO dao3=fabrica.getRecomendacionDAO();
+				
 				//OBTENER CODIGO CURSO
 				String codigo=null;
-				ConexionUPConsulta conexionupc4=new ConexionUPConsulta();
-				Connection pruebaCn4 =conexionupc.getConexion();
-				
-				Statement s4;
-				ResultSet rs4;
-				
-				String sql4="select codigoCurso from Curso where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
+				codigo=dao1.findByNombre(comboBox.getSelectedItem().toString()).getCodigoCurso();
 				
 				
-				
-				try {
-					s4=(Statement)pruebaCn4.createStatement();
-					rs4=((java.sql.Statement)s4).executeQuery(sql4);
-					
-					while(rs4.next()) {
-						codigo=rs4.getString(1);
-						
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				//OBTENER CODIGO PROFESOR
 				String codigoP=null;
-				ConexionUPConsulta conexionupc5=new ConexionUPConsulta();
-				Connection pruebaCn5 =conexionupc.getConexion();
-				
-				Statement s5;
-				ResultSet rs5;
-				
-				String sql5="select codigoProfesor from Profesor where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
-				
-			
+				codigoP=dao2.findByNombre(comboBox_1.getSelectedItem().toString()).getCodigoProfesor();
 				
 				
-				
-				try {
-					s5=(Statement)pruebaCn5.createStatement();
-					rs5=((java.sql.Statement)s5).executeQuery(sql5);
-					
-					while(rs5.next()) {
-						codigoP=rs5.getString(1);
-						
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				//AGREGAR COMENTARIO
-				ConexionUPConsulta conexionupc3=new ConexionUPConsulta();
-				Connection pruebaCn3=conexionupc3.getConexion();
 				
-				Statement s3;
-				int rs3;
-				String sql3="insert into Recomendacion values ('"+LoginUPConsulta.codigoPrincipal+"','"+codigoP+"','"+codigo+"','"
-				+textField.getText()+"',"+comboBox_2.getSelectedItem()+")";
+				RecomendacionBean recomendacion=new RecomendacionBean();
+				recomendacion.setCodigoAlumnoReco(LoginUPConsulta.codigoPrincipal);
+				recomendacion.setCodigoCursoReco(codigo);
+				recomendacion.setCodigoProfesorReco(codigoP);
+				recomendacion.setDescripcionReco(textField.getText());
+				recomendacion.setPuntuacion(Integer.parseInt(comboBox_2.getSelectedItem().toString()));
+				recomendacion.setCodigoRecomendacion(1);;//Recordar que es IDENTITY
 				
-				System.out.println();
-				System.out.println(sql3);
+				dao3.save(recomendacion);
 				
-				try {
-					s3=(Statement)pruebaCn3.createStatement();
-					rs3=s3.executeUpdate(sql3);
-					JOptionPane.showMessageDialog(null, "Recomendacion Agregada");
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				
 				
@@ -235,30 +190,19 @@ public class agregarRecomendacion extends JFrame {
 		btnOk.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				DAOFactory fabrica = DAOFactory.getDAOFactory(2);
+				ProfesorDAO dao1 = fabrica.getProfesorDAO();
+				ArrayList<ProfesorBean> listaprofesor = new ArrayList<ProfesorBean>();
+				listaprofesor=dao1.findByCurso(comboBox.getSelectedItem().toString());
+				
 				comboBox_1.setEnabled(true);
-				ConexionUPConsulta conexionupc2=new ConexionUPConsulta();
-				Connection pruebaCn2 =conexionupc.getConexion();
 				
-				Statement s2;
-				ResultSet rs2;
-				
-				String sql2="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
-				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
-				
-				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());
-				
-				try {
-					s2=(Statement)pruebaCn.createStatement();
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					
-					while(rs2.next()) {
-						comboBox_1.addItem(rs2.getString(1));
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				 for (ProfesorBean profesorBean : listaprofesor) {
+					 comboBox_1.addItem(profesorBean.getNombreProfesor());
 				}
+				
+				
+				
 				
 			}
 		});

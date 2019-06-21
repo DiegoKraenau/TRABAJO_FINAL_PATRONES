@@ -14,8 +14,10 @@ import Fabrica.DAOFactory;
 import Fabrica.Dao.AlumnoDAO;
 import Fabrica.Dao.CursoDAO;
 import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.RecomendacionDAO;
 import Persistencia.CursoBean;
 import Persistencia.ProfesorBean;
+import Persistencia.RecomendacionBean;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -23,6 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -151,59 +154,30 @@ public class panelAgregar extends JPanel {
 		JButton btnBuscar_1 = new JButton("Buscar");
 		btnBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String requisito=null;
-				String promedio=null;
-				requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
-						"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"'";
 				
-				System.out.println(requisito);;
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				RecomendacionDAO dao1=factory.getRecomendacionDAO();
+				ProfesorDAO dao2=factory.getProfesorDAO();
+				CursoDAO dao3=factory.getCursoDAO();
 				
-				if(comboBox.isEnabled()) {
-					requisito="select codigoRecomendacion,nombreProfesor,nombreCurso,descripcionReco,puntuacion from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor\r\n" + 
-							"inner join Curso on Recomendacion.codigoCursoReco=Curso.codigoCurso "+ "where nombreCurso='"+comboBox.getSelectedItem()+"' and nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+				ArrayList<RecomendacionBean> listaRecomendacion=new ArrayList<RecomendacionBean>();
+				listaRecomendacion=dao1.findByProfesor_Curso(comboBox_1.getSelectedItem().toString(), comboBox.getSelectedItem().toString());
+				
+				
+				
+				for (RecomendacionBean recomendacionBean : listaRecomendacion) {
+					dato[0]=Integer.toString(recomendacionBean.getCodigoRecomendacion());
+					dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getContraseñaProfesor();
+					dato[2]=dao3.findById(recomendacionBean.getCodigoCursoReco()).getNombreCurso();
+					dato[3]=Integer.toString(recomendacionBean.getPuntuacion());
+					dato[4]=recomendacionBean.getDescripcionReco();
+					model.addRow(dato);
 				}
 				
-				promedio="select SUM(puntuacion)/COUNT(Recomendacion.codigoRecomendacion) from Recomendacion inner join Profesor on Recomendacion.codigoProfesorReco=Profesor.codigoProfesor" + 
-						" where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
-
+				label_1.setText(dao1.findPromedio(comboBox_1.getSelectedItem().toString(), comboBox.getSelectedItem().toString(),model.getRowCount()));
 				
 				
-				try {
-					
-					ConexionUPConsulta conexionupc3=new ConexionUPConsulta();
-					Connection pruebaCn3 =conexionupc3.getConexion();
-					
-					ConexionUPConsulta conexionupc_4=new ConexionUPConsulta();
-					Connection pruebaCn_4 =conexionupc_4.getConexion();
-					
-					Statement s3;
-					ResultSet rs3;
-					Statement s_4;
-					ResultSet rs_4;
-					
-					s3=(Statement)pruebaCn3.createStatement();
-					rs3=s3.executeQuery(requisito);
-					
-					s_4=(Statement)pruebaCn_4.createStatement();
-					rs_4=s_4.executeQuery(promedio);
 				
-					while(rs3.next()) {
-						dato[0]=rs3.getString(1);
-						dato[1]=rs3.getString(2);
-						dato[2]=rs3.getString(3);
-						dato[3]=rs3.getString(4);
-						dato[4]=rs3.getString(5);
-						model.addRow(dato);
-					}
-					if(rs_4.next()) {
-						label_1.setText(rs_4.getString(1));
-						
-					}
-					
-					
-				}catch(SQLException e1) {
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnBuscar_1.setFont(new Font("Rockwell", Font.BOLD, 13));
@@ -214,9 +188,13 @@ public class panelAgregar extends JPanel {
 		btnAgregarRecomendacion.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnAgregarRecomendacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
 				agregarRecomendacion p1=new agregarRecomendacion();
 				p1.setUndecorated(true);
 				p1.show();
+				
+				
 			}
 		});
 		btnAgregarRecomendacion.setBounds(266, 348, 111, 23);
@@ -237,6 +215,8 @@ public class panelAgregar extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//JOptionPane.showMessageDialog(null, table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()));
 				//table.get
+				
+				
 				panelAgregar.num=(String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn());
 				//JOptionPane.showMessageDialog(null, panelAgregar.num);
 				verRecomendacion p1=new verRecomendacion();
