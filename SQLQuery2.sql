@@ -1,3 +1,4 @@
+create database patronesTF
 use patronesTF
 
 
@@ -186,8 +187,6 @@ FOREIGN KEY (codigoSede3) references Sede(codigoSede)
 insert into AulaSede values('H205','Villa','Lunes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','Monterrico','Martes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','San Miguel','Miercoles','9:00','11:00',1,NULL,NULL)
-
-
 
 
 
