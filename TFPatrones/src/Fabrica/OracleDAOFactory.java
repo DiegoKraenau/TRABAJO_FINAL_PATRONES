@@ -6,8 +6,10 @@ import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
 import Fabrica.Dao.SalonDAO;
 import Fabrica.Dao.SedeDAO;
+import Fabrica.Dao.TallerVDAO;
 import Fabrica.Dao.Impl.AlumnoDAOImplements;
 import Fabrica.Dao.Impl.SedeDAOImplements;
+import Fabrica.Dao.Impl.TallerVDAOImplements;
 
 public class OracleDAOFactory implements DAOFactory {
 
@@ -45,6 +47,12 @@ public class OracleDAOFactory implements DAOFactory {
 	public RecomendacionDAO getRecomendacionDAO() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public TallerVDAO getTallerVDAO() {
+		// TODO Auto-generated method stub
+		return new TallerVDAOImplements();
 	}
 
 }

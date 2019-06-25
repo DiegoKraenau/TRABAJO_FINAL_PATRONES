@@ -6,12 +6,14 @@ import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
 import Fabrica.Dao.SalonDAO;
 import Fabrica.Dao.SedeDAO;
+import Fabrica.Dao.TallerVDAO;
 import Fabrica.Dao.Impl.AlumnoDAOImplements;
 import Fabrica.Dao.Impl.CursoDAOImplements;
 import Fabrica.Dao.Impl.ProfesorDAOImplements;
-import Fabrica.Dao.Impl.RecomendacionDAOImplements;
+
 import Fabrica.Dao.Impl.SalonDAOImplements;
 import Fabrica.Dao.Impl.SedeDAOImplements;
+import Fabrica.Dao.Impl.TallerVDAOImplements;
 
 public class SqlDAOFactory implements DAOFactory {
 
@@ -45,10 +47,19 @@ public class SqlDAOFactory implements DAOFactory {
 		return new ProfesorDAOImplements();
 	}
 
+
+
+
+	@Override
+	public TallerVDAO getTallerVDAO() {
+		// TODO Auto-generated method stub
+		return new TallerVDAOImplements();
+	}
+
 	@Override
 	public RecomendacionDAO getRecomendacionDAO() {
 		// TODO Auto-generated method stub
-		return new RecomendacionDAOImplements();
+		return null;
 	}
 
 }

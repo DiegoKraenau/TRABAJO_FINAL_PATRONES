@@ -6,6 +6,7 @@ import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
 import Fabrica.Dao.SalonDAO;
 import Fabrica.Dao.SedeDAO;
+import Fabrica.Dao.TallerVDAO;
 
 public interface DAOFactory {
 	
@@ -19,6 +20,7 @@ public interface DAOFactory {
 	public abstract SalonDAO getSalonDAO();
 	public abstract ProfesorDAO getProfesorDAO();
 	public abstract RecomendacionDAO getRecomendacionDAO();
+	public abstract TallerVDAO getTallerVDAO();
 	
 	public static DAOFactory getDAOFactory(int whichFactory){
 	       switch(whichFactory){

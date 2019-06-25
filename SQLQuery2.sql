@@ -188,9 +188,23 @@ insert into AulaSede values('H205','Villa','Lunes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','Monterrico','Martes','8:00','10:00',1,NULL,NULL)
 insert into AulaSede values('H205','San Miguel','Miercoles','9:00','11:00',1,NULL,NULL)
 
+create table TallerVirtual(
+codigoTaller varchar(20),
+nombreDia varchar(20),
+nombreCur varchar(30) NULL,
+nombrePro varchar(60)  NULL,
+fecha varchar(60),
+hora varchar(20),
+fin varchar(20),
 
+)
 
-
+insert into TallerVirtual values('1010','Lunes','Calculo','JoelRojas','16/10/19','10:00','12:00')
+/*insert into Taller values('2020','Martes','Martes','8:00','10:00',1,NULL,NULL)*/
+select *from TallerVirtual
+/*drop table TallerVirtual*/
+sql="Update Alumno set contraseñaAlumno='"+user.getContraseñaAlumno()+"', nombreAlumno='"+user.getNombreAlumno()+"' where codigoAlumno ='"+user.getCodigoAlumno()+"'";
+Update TallerVirtual set fecha='5050',nombreDia='Martes' where codigoTaller='1010'
 
 
 
