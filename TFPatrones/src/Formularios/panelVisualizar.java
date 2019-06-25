@@ -79,8 +79,6 @@ public class panelVisualizar extends JPanel {
 			model.addRow(dato);
 		}
 		
-		
-		
 		JLabel lblMisRecomendaciones = new JLabel("Mis Recomendaciones");
 		lblMisRecomendaciones.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMisRecomendaciones.setBounds(245, 16, 146, 14);
@@ -110,6 +108,10 @@ public class panelVisualizar extends JPanel {
 				RecomendacionDAO dao1=factory.getRecomendacionDAO();
 				ProfesorDAO dao2=factory.getProfesorDAO();
 				CursoDAO dao3=factory.getCursoDAO();
+				int c = model.getRowCount();
+				for (int j = 0; j < c ; j++) {
+					model.removeRow(0);
+				}
 				ArrayList<RecomendacionBean> listaRecomendacion=new ArrayList<RecomendacionBean>();
 				listaRecomendacion=dao1.findRecomendacionAlumno(LoginUPConsulta.codigoPrincipal);
 				

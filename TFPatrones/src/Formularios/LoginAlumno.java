@@ -32,6 +32,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 	panelAgregar p2=new panelAgregar();
 	panelVisualizar p3=new panelVisualizar();
 	panelElegirTaller p4=new panelElegirTaller();
+	panelMisTalleres p5 = new panelMisTalleres();
 	
 
 	/**
@@ -135,7 +136,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 				p2.setVisible(true);
 				p3.setVisible(false);
 				p4.setVisible(false);
-				
+				p5.setVisible(false);
 			}
 		});
 		panel_1.setLayout(null);
@@ -144,13 +145,11 @@ public class LoginAlumno extends JFrame implements ActionListener {
 		JButton btnVisualizarRecomendacin = new JButton("Visualizar Recomendaci\u00F3n");
 		btnVisualizarRecomendacin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				panelGeneral.add(p3);
-				//panelGeneral.add(p4);
 				p2.setVisible(false);
 				p3.setVisible(true);
 				p4.setVisible(false);
-				
+				p5.setVisible(false);
 			}
 			
 			
@@ -167,7 +166,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 				p2.setVisible(false);
 				p3.setVisible(false);
 				p4.setVisible(true);
-				
+				p5.setVisible(false);
 			}
 		});
 		btnElegirTaller.setBounds(0, 77, 190, 34);
@@ -187,6 +186,22 @@ public class LoginAlumno extends JFrame implements ActionListener {
 		JLabel lblNewLabel_5 = new JLabel("New label");
 		lblNewLabel_5.setBounds(0, 21, 46, 14);
 		panel_1.add(lblNewLabel_5);
+		
+		JButton btnMisTalleres = new JButton("Mis Talleres");
+		btnMisTalleres.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//p5 = new panelMisTalleres();
+				panelGeneral.add(p5);
+				p2.setVisible(false);
+				p3.setVisible(false);
+				p4.setVisible(false);
+				p5.setVisible(true);
+			}
+		});
+		btnMisTalleres.setForeground(Color.WHITE);
+		btnMisTalleres.setBackground(Color.DARK_GRAY);
+		btnMisTalleres.setBounds(0, 110, 190, 34);
+		panel_1.add(btnMisTalleres);
 		
 		JLabel lblNewLabel_3 = new JLabel("    X");
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {

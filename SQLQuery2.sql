@@ -1,4 +1,4 @@
-create database patronesTF
+
 use patronesTF
 
 
@@ -86,7 +86,7 @@ insert into Profesor values('P001','Maritza Vilca','maritza2009')
 insert into Profesor values('P002','Sebastian Gimenez','sebastian2009')
 
 
-
+SELECT * FROM Profesor
 
 create table ProfesorCurso(
 codigoProfesor2 varchar(20),
@@ -142,9 +142,6 @@ insert into Sede values('San Isidro')
 create table SedeProfesor(
 codigoProfesor3 varchar(20),
 codigoSede2 varchar(20),
-
-
-
 FOREIGN KEY (codigoProfesor3) references Profesor(codigoProfesor),
 FOREIGN KEY (codigoSede2) references Sede(codigoSede),
 )
@@ -196,22 +193,54 @@ nombrePro varchar(60)  NULL,
 fecha varchar(60),
 hora varchar(20),
 fin varchar(20),
-
 )
 
 insert into TallerVirtual values('1010','Lunes','Calculo','JoelRojas','16/10/19','10:00','12:00')
 /*insert into Taller values('2020','Martes','Martes','8:00','10:00',1,NULL,NULL)*/
-select *from TallerVirtual
-/*drop table TallerVirtual*/
-sql="Update Alumno set contraseñaAlumno='"+user.getContraseñaAlumno()+"', nombreAlumno='"+user.getNombreAlumno()+"' where codigoAlumno ='"+user.getCodigoAlumno()+"'";
+
 Update TallerVirtual set fecha='5050',nombreDia='Martes' where codigoTaller='1010'
 
 
+UPDATE Alumno Set contraseñaAlumno = 123 wHERE codigoAlumno = 'u20171A154'
+
+
+SELECT * FROM Alumno
+
+
+INSERT INTO Alumno Values('u201710','123','Rodolfo fake')
 
 
 
+create table Taller(
+codigoTaller int Primary KEY IDENTITY(1,1),
+fechaTaller Date,
+horaTaller varchar(30),
+codigoProfesor varchar(20),
+codigoCurso varchar(20),
+duracionTaller int,
+codigoSede varchar(20),
 
+FOREIGN KEY (codigoProfesor) references Profesor(codigoProfesor),
+FOREIGN KEY (codigoSede) references Sede(codigoSede),
+FOREIGN KEY (codigoCurso) references Curso(codigoCurso)
+)
 
+create table TallerAlumno(
+codigoTaller int,
+codigoAlumno varchar(20),
+FOREIGN KEY (codigoTaller) references Taller(codigoTaller),
+FOREIGN KEY (codigoAlumno) references Alumno(codigoAlumno)
+)
 
+--DROP TABLE TallerAlumno
+--DROP TABLE Taller
 
+--Select * From TallerAlumno
+--Select * From Curso
 
+--INSERT INTO Taller Values('2019-06-06','10:00','P001','C008','4','Villa')
+--SELECT * FROM Taller
+--INSERT INTO TallerAlumno Values(2,'u20171A154')
+--SELECT * FROM TallerAlumno
+
+--Select t.codigoTaller, t.fechaTaller, t.horaTaller, t.codigoProfesor, t.duracionTaller, t.codigoSede from Taller t INNER JOIN TallerAlumno ta on t.codigoTaller = ta.codigoTaller

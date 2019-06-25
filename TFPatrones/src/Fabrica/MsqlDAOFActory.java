@@ -6,6 +6,7 @@ import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
 import Fabrica.Dao.SalonDAO;
 import Fabrica.Dao.SedeDAO;
+import Fabrica.Dao.TallerDAO;
 import Fabrica.Dao.TallerVDAO;
 import Fabrica.Dao.Impl.AlumnoDAOImplements;
 import Fabrica.Dao.Impl.SedeDAOImplements;
@@ -53,6 +54,12 @@ public class MsqlDAOFActory implements DAOFactory {
 	public TallerVDAO getTallerVDAO() {
 		// TODO Auto-generated method stub
 		return new TallerVDAOImplements();
+	}
+
+	@Override
+	public TallerDAO getTallerDAO() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

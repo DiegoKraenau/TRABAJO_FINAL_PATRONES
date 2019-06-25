@@ -130,9 +130,9 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 			sql="select * from Profesor where codigoProfesor='"+cod+"'";
 			rs=st.executeQuery(sql);
 			if(rs.next()) {
-				profesor.setCodigoProfesor(rs.getString(1));
-				profesor.setContraseñaProfesor(rs.getString(2));
-				profesor.setNombreProfesor(rs.getString(3));
+				profesor.setCodigoProfesor(rs.getString("codigoProfesor"));
+				profesor.setContraseñaProfesor(rs.getString("contraseñaProfesor"));
+				profesor.setNombreProfesor(rs.getString("nombreProfesor"));
 				System.out.println("El profesor existe.");
 			}else {
 				System.out.println("El Profesor no existe.");
