@@ -24,6 +24,11 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import Codigo.ConexionUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.TallerDAO;
+import Persistencia.TallerBean;
+
 import javax.swing.DefaultComboBoxModel;
 
 public class panelTallerPresencial extends JPanel {
@@ -59,12 +64,12 @@ public class panelTallerPresencial extends JPanel {
 		
 		JLabel lblCurso = new JLabel("Curso :");
 		lblCurso.setFont(new Font("Rockwell", Font.PLAIN, 13));
-		lblCurso.setBounds(288, 121, 46, 14);
+		lblCurso.setBounds(288, 131, 46, 14);
 		add(lblCurso);
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setEnabled(false);
-		comboBox_1.setBounds(379, 119, 87, 20);
+		comboBox_1.setBounds(379, 129, 87, 20);
 		add(comboBox_1);
 		
 		JLabel lblVacantes = new JLabel("Vacantes :");
@@ -79,7 +84,7 @@ public class panelTallerPresencial extends JPanel {
 		add(comboBox_2);
 		
 		JDateChooser cal = new JDateChooser();
-		cal.setBounds(39, 42, 144, 20);
+		cal.setBounds(42, 62, 144, 20);
 		add(cal);
 		
 		DefaultTableModel model=new DefaultTableModel();
@@ -111,6 +116,11 @@ public class panelTallerPresencial extends JPanel {
 				}
 				diaOficial=nombreDIA;
 				
+				
+				int c=table.getRowCount();
+				for (int j = 0; j < c ; j++) {
+					model.removeRow(0);
+				}
 				
 				ConexionUPConsulta conexionUPC=new ConexionUPConsulta();
 				Connection pruebaCn=conexionUPC.getConexion();
@@ -155,6 +165,11 @@ public class panelTallerPresencial extends JPanel {
 		btnBuscar.setBounds(481, 232, 104, 23);
 		add(btnBuscar);
 		
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
+		comboBox_3.setBounds(379, 97, 87, 20);
+		add(comboBox_3);
+		
 		JButton btnReservar = new JButton("Reservar");
 		btnReservar.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnReservar.addActionListener(new ActionListener() {
@@ -162,20 +177,46 @@ public class panelTallerPresencial extends JPanel {
 				ConexionUPConsulta conexionupc=new ConexionUPConsulta();
 				Connection pruebaCn=conexionupc.getConexion();
 				
+				DAOFactory fabrica=DAOFactory.getDAOFactory(2);
+				TallerDAO dao1=fabrica.getTallerDAO();
+				TallerBean tb=new TallerBean();
+				CursoDAO dao2=fabrica.getCursoDAO();
+						
+						
+				
 				Statement s;
 				int rs=0;
 				
 				
 				String sql="update AulaSede set nombrePro='"+LoginUPConsulta.name+"' , nombreCur='"+comboBox_1.getSelectedItem()+"' , estado=0 "
-						+ "where codigoAula2='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())+"' and "
-						+ "codigoSede3='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()+1)+"' and "
-						+ "nombreDia='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()+2)+"' and "
-						+ "hora='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()+3)+"' and "
-						+ "fin='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()+4)+"'";
+						+ "where codigoAula2='"+table.getValueAt(table.getSelectedRow(), 0)+"' and "
+						+ "codigoSede3='"+table.getValueAt(table.getSelectedRow(), 1)+"' and "
+						+ "nombreDia='"+table.getValueAt(table.getSelectedRow(), 2)+"' and "
+						+ "hora='"+table.getValueAt(table.getSelectedRow(), 3)+"' and "
+						+ "fin='"+table.getValueAt(table.getSelectedRow(), 4)+"'";
+				
+				
+				tb.setFechaTaller(cal.getDate());
+				tb.setHoraTaller(comboBox.getSelectedItem().toString());
+				tb.setCodigoProfesor(LoginUPConsulta.codigoPrincipal);
+				tb.setCodigoAula(table.getValueAt(table.getSelectedRow(), 0).toString());
+				tb.setCodigoCurso(dao2.findByNombre(comboBox_1.getSelectedItem().toString()).getCodigoCurso());
+				tb.setDuracionTaller(Integer.parseInt(comboBox_3.getSelectedItem().toString()));
+				tb.setCodigoSede(table.getValueAt(table.getSelectedRow(), 1).toString());
+				tb.setVacantes(Integer.parseInt(comboBox_2.getSelectedItem().toString()));
+				
+				dao1.save(tb);
+				
+				
+			
+				
+		
 				
 				
 				
-				//table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())
+				
+				
+
 				
 			
 				
@@ -215,7 +256,7 @@ public class panelTallerPresencial extends JPanel {
 		add(btnReservar);
 		
 		
-	
+		
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new ActionListener() {
@@ -307,12 +348,37 @@ public class panelTallerPresencial extends JPanel {
 			}
 		});
 		btnOk.setFont(new Font("Rockwell", Font.BOLD, 13));
-		btnOk.setBounds(496, 65, 67, 23);
+		btnOk.setBounds(504, 64, 67, 23);
 		add(btnOk);
 		
+		JLabel lblDuracion = new JLabel("Duracion:");
+		lblDuracion.setFont(new Font("Rockwell", Font.PLAIN, 13));
+		lblDuracion.setBounds(288, 99, 78, 14);
+		add(lblDuracion);
+		
+		JLabel lblCurso_1 = new JLabel("Aula");
+		lblCurso_1.setBounds(42, 193, 46, 14);
+		add(lblCurso_1);
+		
+		JLabel lblSede = new JLabel("Sede");
+		lblSede.setBounds(119, 193, 46, 14);
+		add(lblSede);
+		
+		JLabel lblDia = new JLabel("Dia");
+		lblDia.setBounds(198, 193, 46, 14);
+		add(lblDia);
+		
+		JLabel lblInicio = new JLabel("Inicio");
+		lblInicio.setBounds(275, 193, 46, 14);
+		add(lblInicio);
+		
+		JLabel lblFin = new JLabel("Fin");
+		lblFin.setBounds(358, 193, 46, 14);
+		add(lblFin);
 		
 		
 		
+
 		
 
 	}

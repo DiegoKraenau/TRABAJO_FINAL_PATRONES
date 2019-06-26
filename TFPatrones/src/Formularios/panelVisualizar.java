@@ -73,7 +73,7 @@ public class panelVisualizar extends JPanel {
 		
 		for (RecomendacionBean recomendacionBean : listaRecomendacion) {
 			dato[0]=Integer.toString(recomendacionBean.getCodigoRecomendacion());
-			dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getContraseñaProfesor();
+			dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getNombreProfesor();
 			dato[2]=dao3.findById(recomendacionBean.getCodigoCursoReco()).getNombreCurso();
 			dato[3]=Integer.toString(recomendacionBean.getPuntuacion());
 			dato[4]=recomendacionBean.getDescripcionReco();
@@ -110,11 +110,25 @@ public class panelVisualizar extends JPanel {
 				
 				if(op==0) {
 					String cod;
-					cod= (String) table_1.getValueAt(table_1.getSelectedRow(), table_1.getSelectedColumn());
+					cod= (String) table_1.getValueAt(table_1.getSelectedRow(), 0);
 				
 					dao1.delete(cod);
 				}
-				
+				int c = model.getRowCount();
+				for (int j = 0; j < c ; j++) {
+					model.removeRow(0);
+				}
+				ArrayList<RecomendacionBean> listaRecomendacion=new ArrayList<RecomendacionBean>();
+				listaRecomendacion=dao1.findRecomendacionAlumno(LoginUPConsulta.codigoPrincipal);
+
+				for (RecomendacionBean recomendacionBean : listaRecomendacion) {
+					dato[0]=Integer.toString(recomendacionBean.getCodigoRecomendacion());
+					dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getNombreProfesor();
+					dato[2]=dao3.findById(recomendacionBean.getCodigoCursoReco()).getNombreCurso();
+					dato[3]=Integer.toString(recomendacionBean.getPuntuacion());
+					dato[4]=recomendacionBean.getDescripcionReco();
+					model.addRow(dato);
+				}
 			
 				
 				
@@ -150,7 +164,7 @@ public class panelVisualizar extends JPanel {
 				
 				for (RecomendacionBean recomendacionBean : listaRecomendacion) {
 					dato[0]=Integer.toString(recomendacionBean.getCodigoRecomendacion());
-					dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getContraseñaProfesor();
+					dato[1]=dao2.findById(recomendacionBean.getCodigoProfesorReco()).getNombreProfesor();
 					dato[2]=dao3.findById(recomendacionBean.getCodigoCursoReco()).getNombreCurso();
 					dato[3]=Integer.toString(recomendacionBean.getPuntuacion());
 					dato[4]=recomendacionBean.getDescripcionReco();

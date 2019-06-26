@@ -87,22 +87,18 @@ public class panelAgregar extends JPanel {
 		//--------------------------------------------------
 		
 		DefaultTableModel model=new DefaultTableModel();
-		model.addColumn("Codigo");
-		model.addColumn("Nombre");
-		model.addColumn("Curso");
-		model.addColumn("Puntaje");
-		model.addColumn("Descripcion:");
+	
 		
 		
 		
-		String[] dato=new String[5];
+		
 		//String requisito=null;
 		
 		table = new JTable();
 		table.setBounds(47, 154, 520, 183);
 		add(table);
 		
-		table.setModel(model);
+	
 		
 		JButton btnBuscar = new JButton("OK");
 		btnBuscar.addActionListener(new ActionListener() {
@@ -141,7 +137,7 @@ public class panelAgregar extends JPanel {
 		
 		JLabel lblResultados = new JLabel("Resultados:");
 		lblResultados.setFont(new Font("Rockwell", Font.PLAIN, 13));
-		lblResultados.setBounds(47, 129, 73, 14);
+		lblResultados.setBounds(47, 106, 73, 14);
 		add(lblResultados);
 		
 		JLabel lblRecomendaciones = new JLabel("Recomendaciones");
@@ -151,11 +147,70 @@ public class panelAgregar extends JPanel {
 		
 		JLabel label_1 = new JLabel("----");
 		
+		model.addColumn("Codigo");
+		model.addColumn("Nombre");
+		model.addColumn("Curso");
+		model.addColumn("Puntaje");
+		model.addColumn("Descripcion:");
+		
+		DefaultTableModel model2=new DefaultTableModel();
+		model2.addColumn("Nombre");
+		model2.addColumn("Curso");
+		model2.addColumn("Puntaje");	
+		
+		
+		
+		
+		JLabel lblNewLabel = new JLabel("Codigo");
+		lblNewLabel.setBounds(57, 129, 46, 14);
+		add(lblNewLabel);
+		lblNewLabel.setVisible(false);
+		
+		JLabel lblNewLabel_1 = new JLabel("Profesor");
+		lblNewLabel_1.setBounds(164, 129, 73, 14);
+		add(lblNewLabel_1);
+		lblNewLabel_1.setVisible(false);
+		
+		JLabel lblNewLabel_2 = new JLabel("Curso");
+		lblNewLabel_2.setBounds(272, 129, 46, 14);
+		add(lblNewLabel_2);
+		lblNewLabel_2.setVisible(false);
+		
+		JLabel lblNewLabel_3 = new JLabel("Descripcion");
+		lblNewLabel_3.setBounds(476, 129, 79, 14);
+		add(lblNewLabel_3);
+		lblNewLabel_3.setVisible(false);
+		
+		JLabel lblNewLabel_4 = new JLabel("Puntaje");
+		lblNewLabel_4.setBounds(383, 129, 46, 14);
+		add(lblNewLabel_4);
+		lblNewLabel_4.setVisible(false);
+		
+		
 		JButton btnBuscar_1 = new JButton("Buscar");
 		btnBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				if(comboBox_1.isEnabled() ) {
+					lblNewLabel_1.setBounds(164, 129, 73, 14);
+					lblNewLabel_4.setBounds(383, 129, 46, 14);
+					lblNewLabel.setVisible(true);
+					lblNewLabel_1.setVisible(true);
+					lblNewLabel_2.setVisible(true);
+					lblNewLabel_3.setVisible(true);
+					lblNewLabel_4.setVisible(true);
+					
+					
+				
+					String[] dato=new String[5];
+					
+					table.setModel(model);
+					
+					int c = model.getRowCount();
+					for (int j = 0; j < c ; j++) {
+						model.removeRow(0);
+					}
 				RecomendacionDAO dao1=factory.getRecomendacionDAO();
 				ProfesorDAO dao2=factory.getProfesorDAO();
 				CursoDAO dao3=factory.getCursoDAO();
@@ -172,13 +227,63 @@ public class panelAgregar extends JPanel {
 					dato[3]=Integer.toString(recomendacionBean.getPuntuacion());
 					dato[4]=recomendacionBean.getDescripcionReco();
 					model.addRow(dato);
+					
+					label_1.setText(dao1.findPromedio(comboBox_1.getSelectedItem().toString(), comboBox.getSelectedItem().toString(),model.getRowCount()));
 				}
 				
-				label_1.setText(dao1.findPromedio(comboBox_1.getSelectedItem().toString(), comboBox.getSelectedItem().toString(),model.getRowCount()));
+				}
 				
+				
+				
+				if(comboBox_1.isEnabled()==false) {	
+					
+				
+					lblNewLabel_1.setBounds(57, 129, 56, 14);
+					lblNewLabel_4.setBounds(476, 129, 79, 14);
+				
+					
+					lblNewLabel.setVisible(false);
+					lblNewLabel_1.setVisible(true);
+					lblNewLabel_2.setVisible(true);
+					lblNewLabel_3.setVisible(false);
+					lblNewLabel_4.setVisible(true);
+					
+					String[] dato2=new String[3];
+					
+					
+					table.setModel(model2);
+
+					DAOFactory factory2=DAOFactory.getDAOFactory(2);
+					RecomendacionDAO dao4=factory.getRecomendacionDAO();
+					ProfesorDAO dao5=factory.getProfesorDAO();
+					CursoDAO dao6=factory.getCursoDAO();
+					System.out.println("dog");
+					int c = model2.getRowCount();
+					for (int j = 0; j < c ; j++) {
+						model2.removeRow(0);
+					}
+					ArrayList<RecomendacionBean> listaRecomendacion2=new ArrayList<RecomendacionBean>();
+					
+					listaRecomendacion2=dao4.findRecomendacionCurso(comboBox.getSelectedItem().toString());
+					
+					for (RecomendacionBean recomendacionBean : listaRecomendacion2) {
+						System.out.println(dao5.findById(recomendacionBean.getCodigoProfesorReco()).getNombreProfesor());
+						dato2[0]=dao5.findById(recomendacionBean.getCodigoProfesorReco()).getNombreProfesor();
+						dato2[1]=dao6.findById(recomendacionBean.getCodigoCursoReco()).getNombreCurso();
+						dato2[2]=Integer.toString(recomendacionBean.getPuntuacion());
+						model2.addRow(dato2);
+						
+					}
+					
+
+					
+				}
 				
 				
 			}
+			
+			
+			
 		});
 		btnBuscar_1.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnBuscar_1.setBounds(97, 348, 124, 23);
@@ -202,11 +307,11 @@ public class panelAgregar extends JPanel {
 		
 		JLabel label = new JLabel("Promedio:");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		label.setBounds(439, 130, 64, 14);
+		label.setBounds(435, 112, 64, 14);
 		add(label);
 		
 		
-		label_1.setBounds(510, 130, 46, 14);
+		label_1.setBounds(495, 112, 46, 14);
 		add(label_1);
 		
 		JButton btnVer = new JButton("Ver");
@@ -226,6 +331,19 @@ public class panelAgregar extends JPanel {
 		});
 		btnVer.setBounds(414, 348, 89, 23);
 		add(btnVer);
+		
+		JButton btnDeshabilitar = new JButton("Disable");
+		btnDeshabilitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comboBox_1.setEnabled(false);
+				
+				
+			}
+		});
+		btnDeshabilitar.setFont(new Font("Rockwell", Font.BOLD, 13));
+		btnDeshabilitar.setBounds(356, 78, 89, 23);
+		add(btnDeshabilitar);
+	
 		
 		
 

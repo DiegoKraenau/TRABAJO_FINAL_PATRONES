@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -23,6 +24,29 @@ public class TallerDAOImplements implements TallerDAO {
 	@Override
 	public void save(TallerBean t) {
 		// TODO Auto-generated method stub
+		String sql;
+		Statement st;
+		int rs=0;
+		Connection con=null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			con=getConnection();
+			sql="insert into Taller values('"+sdf.format(t.getFechaTaller())+"','"+t.getHoraTaller()+"','"+t.getCodigoProfesor()+"','"+t.getCodigoAula()+"','"+t.getCodigoCurso()+"','"+t.getDuracionTaller()+"','"+t.getCodigoSede()+"','"+t.getVacantes()+"')";
+			st=con.createStatement();
+			rs=st.executeUpdate(sql);
+			if(rs==1) {
+				System.out.println("Se agrego alumno.");
+			}else {
+				System.out.println("No se agrego alumno.");
+			}
+			st.close();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		
 		
 	}
 

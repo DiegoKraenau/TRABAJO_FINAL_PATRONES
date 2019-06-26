@@ -85,7 +85,7 @@ public class LoginProfesor extends JFrame {
 	
 		
 		
-		JButton btnAgregarTallerPresencial = new JButton("Agregar Taller Presencial");
+		JButton btnAgregarTallerPresencial = new JButton("Agregar Taller");
 		btnAgregarTallerPresencial.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -114,26 +114,6 @@ public class LoginProfesor extends JFrame {
 		panel_3.setBounds(20, 21, 607, 366);
 		panel_2.add(panel_3);
 		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JButton btnAgregarTallerVirtual = new JButton("Agregar Taller Virtual");
-		btnAgregarTallerVirtual.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panel_3.add(pa2);
-				pa1.setVisible(false);
-				pa2.setVisible(true);
-			}
-		});
-		btnAgregarTallerVirtual.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				
-			}
-		});
-		btnAgregarTallerVirtual.setForeground(Color.WHITE);
-		btnAgregarTallerVirtual.setBackground(Color.DARK_GRAY);
-		btnAgregarTallerVirtual.setBounds(0, 45, 190, 34);
-		panel_1.add(btnAgregarTallerVirtual);
 		
 		JLabel label_3 = new JLabel("");
 		label_3.setIcon(new ImageIcon("Imagenes\\logoUPC4.png"));

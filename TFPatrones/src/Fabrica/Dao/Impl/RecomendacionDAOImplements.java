@@ -252,6 +252,49 @@ public class RecomendacionDAOImplements implements RecomendacionDAO{
 		
 	}
 
+	@Override
+	public ArrayList<RecomendacionBean> findRecomendacionCurso(String Curso) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<RecomendacionBean> lista = new ArrayList<RecomendacionBean>();
+		RecomendacionBean recomendacion = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql = "select codigoProfesor,codigoCurso,AVG(puntuacion)'puntuacion' from Recomendacion"
+					+ " inner join Profesor on Profesor.codigoProfesor=Recomendacion.codigoProfesorReco "
+					+ " inner join Curso on Curso.codigoCurso=Recomendacion.codigoCursoReco"
+					+ " WHERE nombreCurso='"+Curso+"' "
+					+ "group by codigoProfesor,codigoCurso "
+					+ " order by AVG(puntuacion) ASC" ;
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				recomendacion = new RecomendacionBean();
+				recomendacion.setCodigoProfesorReco(rs.getString(1));
+				recomendacion.setCodigoCursoReco(rs.getString(2));
+				recomendacion.setPuntuacion(rs.getInt(3));
+				lista.add(recomendacion);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return lista;
+		
+		
+		
+		
+	}
+
+	
+	
+	
 
 
 

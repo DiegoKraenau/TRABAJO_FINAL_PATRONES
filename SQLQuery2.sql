@@ -173,26 +173,6 @@ insert into Aula values('H205',40)
 
 
 
-create table AulaSede(
-codigoAula2 varchar(20),
-codigoSede3 varchar(20),
-nombreDia varchar(20),
-hora time,
-fin time,
-estado bit,
-nombrePro varchar(60)  NULL,
-nombreCur varchar(30) NULL,
-
-
-FOREIGN KEY (codigoAula2) references Aula(codigoAula),
-FOREIGN KEY (codigoSede3) references Sede(codigoSede)
-
-)
-
-insert into AulaSede values('H205','Villa','Lunes','8:00','10:00',1,NULL,NULL)
-insert into AulaSede values('H205','Monterrico','Martes','8:00','10:00',1,NULL,NULL)
-insert into AulaSede values('H205','San Miguel','Miercoles','9:00','11:00',1,NULL,NULL)
-
 create table TallerVirtual(
 codigoTaller varchar(20),
 nombreDia varchar(20),
@@ -255,3 +235,46 @@ FOREIGN KEY (codigoAlumno) references Alumno(codigoAlumno)
 --SELECT * FROM TallerAlumno
 
 --Select t.codigoTaller, t.fechaTaller, t.horaTaller, t.codigoProfesor, t.duracionTaller, t.codigoSede from Taller t INNER JOIN TallerAlumno ta on t.codigoTaller = ta.codigoTaller
+
+INSERT INTO Aula values ('H205','40')
+INSERT INTO Aula values ('H206','40')
+
+INSERT INTO Aula values ('H207','40')
+INSERT INTO Aula values ('H208','40')
+INSERT INTO Aula values ('H209','30')
+INSERT INTO Aula values ('H210','40')
+INSERT INTO Aula values ('H211','30')
+INSERT INTO Aula values ('H212','40')
+INSERT INTO Aula values ('H213','30')
+INSERT INTO Aula values ('H214','40')
+INSERT INTO Aula values ('H215','30')
+
+select*from AulaSede
+
+create table AulaSede(
+codigoAula2 varchar(20),
+codigoSede3 varchar(20),
+nombreDia varchar(20),
+hora varchar(30),
+fin varchar(30),
+estado bit,
+nombrePro varchar(60)  NULL,
+nombreCur varchar(30) NULL,
+
+
+FOREIGN KEY (codigoAula2) references Aula(codigoAula),
+FOREIGN KEY (codigoSede3) references Sede(codigoSede)
+
+)
+
+INSERT INTO AulaSede values ('H207','Villa','Jueves','8:00','10:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H215','Villa','Jueves','8:00','10:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H208','Monterrico','Viernes','7:00','9:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H209','San Miguel','Sabado','11:00','1:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H210','Villa','Lunes','10:00','12:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H211','Monterrico','Martes','12:00','14:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H212','San Isidro','Miercoles','12:00','14:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H213','Villa','Jueves','16:00','18:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H214','Monterrico','Viernes','18:00','20:00','1',NULL,NULL)
+INSERT INTO AulaSede values ('H215','San Isidro','Sabado','13:00','15:00','1',NULL,NULL)
+
