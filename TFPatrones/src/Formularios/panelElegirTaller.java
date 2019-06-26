@@ -52,37 +52,9 @@ public class panelElegirTaller extends JPanel {
 		JButton btnInscribirse = new JButton("Inscribirse");
 		btnInscribirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				ConexionUPConsulta conexionupc=new ConexionUPConsulta();
-				Connection pruebaCn=conexionupc.getConexion();
-				
-				Statement s;
-				int rs=0;
-				
-				String sql="update Aula set aforoAula=aforoAula-1 where codigoAula='"+table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())+"'" ;
-				
-				try {
-					s=(Statement)pruebaCn.createStatement();
-					rs=s.executeUpdate(sql);
-					
-					
-					if(rs==1) {
-						JOptionPane.showMessageDialog(null, "Se inscribio al taller");
-					}else {
-						JOptionPane.showMessageDialog(null, "No se inscribio al taller");
-					}
-					
-					
-					
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				
-				
-				
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				TallerDAO dao1=factory.getTallerDAO();
+				dao1.inscripcionTaller(Integer.parseInt((String)table.getValueAt(table.getSelectedRow(), 0)),LoginUPConsulta.codigoPrincipal);
 			}
 		});
 		btnInscribirse.setFont(new Font("Rockwell", Font.BOLD, 12));
@@ -186,12 +158,17 @@ public class panelElegirTaller extends JPanel {
 		
 		
 		DefaultTableModel model=new DefaultTableModel();
-		model.addColumn("Aula");
+		model.addColumn("Codigo");
+		model.addColumn("Fecha");
+		model.addColumn("Hora");
+		model.addColumn("Profesor");
+		model.addColumn("Duracion");
 		model.addColumn("Sede");
-		model.addColumn("Dia");
-		model.addColumn("Inicio");
-		model.addColumn("Fin");
+		model.addColumn("Curso");
+		model.addColumn("Aula");
 		model.addColumn("Vacantes");
+		
+		String[] dato=new String[9];
 		
 		
 		table.setModel(model);
@@ -201,59 +178,34 @@ public class panelElegirTaller extends JPanel {
 		btnBuscar_1.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnBuscar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				ConexionUPConsulta conexionUPC=new ConexionUPConsulta();
-				Connection pruebaCn=conexionUPC.getConexion();
+				int c = model.getRowCount();
+				for (int j = 0; j < c ; j++) {
+					model.removeRow(0);
+				}
 				
-				//DAOFactory factory=DAOFactory.getDAOFactory(2);
-				//AulaDAO dao1=factory.getAulaDAO();
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				TallerDAO dao1=factory.getTallerDAO();
+				ArrayList<TallerBean> listaTalleres=new ArrayList<TallerBean>();
 				
-				//ArrayList<AulaBean> listaAula=new ArrayList<AulaBean>();
-				//listaAula=dao1.findbySede(comboBox.getSelectedItem(), comboBox_1.getSelectedItem());
+				ProfesorDAO dao2 = factory.getProfesorDAO();
+				CursoDAO dao3 = factory.getCursoDAO();
+				ProfesorBean pro = dao2.findByNombre((String)comboBox_1.getSelectedItem());
+				CursoBean cur = dao3.findByNombre((String)comboBox.getSelectedItem());
 				
-				//String[] dato=new String[6];
-				//for(int i=0; i<listaAula.size(); i++) {
-					 //dato[0] = listaAula.get(i).getCodigoAula();
-					 //dato[1] = listaAula.get(i).getCodigoSede();
-					 //dato[2] = listaAula.get(i).getNombreDia();
-					 //dato[3] = String.valueOf(listaAula.get(i).getHora());
-					 //dato[4] = String.valueOf(listaAula.get(i).getFin());
-					 //dato[5] = String.valueOf(listaAula.get(i).getAforoAula());
-					 //model.addRow(dato);   
-		        //}
-				
-                Statement s;
-				
-				ResultSet rs;
-				
-				String sql=null;
-				
-				String[] dato=new String[6];
-				
-				try {
-					sql="select codigoAula2,codigoSede3,nombreDia,hora,fin,Aula.aforoAula from AulaSede "
-						+ "inner join Aula on AulaSede.codigoAula2=Aula.codigoAula "
-						+ " where nombreCur='"+comboBox.getSelectedItem()+"' and nombrePro='"+comboBox_1.getSelectedItem()+"' and"
-						+ " estado=0";
-				
-					
-					s=(Statement)pruebaCn.createStatement();
-					rs=((java.sql.Statement)s).executeQuery(sql);
-					
-					while(rs.next()) {
-						dato[0]=rs.getString(1);
-						dato[1]=rs.getString(2);
-						dato[2]=rs.getString(3);
-						dato[3]=rs.getString(4);
-						dato[4]=rs.getString(5);
-						dato[5]=rs.getString(6);
-						model.addRow(dato);
-						
-					}
-					
-					
-				} catch (Exception e) {
-					// TODO: handle exception
+				listaTalleres=dao1.findbyCurProSed(cur.codigoCurso, pro.codigoProfesor, (String)comboBox_2.getSelectedItem());
+				for (TallerBean tallerBean : listaTalleres) {
+					dato[0]= Integer.toString(tallerBean.codigoTaller);
+					dato[1]= tallerBean.fechaTaller.toString();
+					dato[2]= tallerBean.horaTaller;
+					pro = dao2.findById(tallerBean.codigoProfesor);
+					dato[3]= pro.nombreProfesor;
+					dato[4]= Integer.toString(tallerBean.duracionTaller);
+					dato[5]= tallerBean.codigoSede;
+					cur = dao3.findById(tallerBean.codigoCurso);
+					dato[6]= cur.nombreCurso;
+					dato[7]= tallerBean.codigoAula;
+					dato[8]= Integer.toString(tallerBean.vacantes);
+					model.addRow(dato);
 				}
 				
 			}
