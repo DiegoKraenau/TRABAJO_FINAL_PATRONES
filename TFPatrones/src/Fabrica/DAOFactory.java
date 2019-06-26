@@ -1,6 +1,7 @@
 package Fabrica;
 
 import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.AulaDAO;
 import Fabrica.Dao.CursoDAO;
 import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
@@ -23,6 +24,7 @@ public interface DAOFactory {
 	public abstract RecomendacionDAO getRecomendacionDAO();
 	public abstract TallerVDAO getTallerVDAO();
 	public abstract TallerDAO getTallerDAO();
+	public abstract AulaDAO getAulaDAO();
 	
 	public static DAOFactory getDAOFactory(int whichFactory){
 	       switch(whichFactory){

@@ -7,6 +7,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Codigo.ConexionUPConsulta;
+import Fabrica.DAOFactory;
+import Fabrica.Dao.AulaDAO;
+import Fabrica.Dao.CursoDAO;
+import Fabrica.Dao.ProfesorDAO;
+import Fabrica.Dao.SedeDAO;
+import Fabrica.Dao.TallerDAO;
+import Persistencia.AulaBean;
+import Persistencia.CursoBean;
+import Persistencia.ProfesorBean;
+import Persistencia.SedeBean;
+import Persistencia.TallerBean;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -14,6 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -97,30 +109,16 @@ public class panelElegirTaller extends JPanel {
 		add(comboBox);
 		
 		//---------------------CONECTAR CURSO-----------------------------
-		ConexionUPConsulta conexionupc=new ConexionUPConsulta();
-		Connection pruebaCn =conexionupc.getConexion();
+		DAOFactory factory=DAOFactory.getDAOFactory(2);
+		CursoDAO dao1=factory.getCursoDAO();
 		
-		Statement s;
-		ResultSet rs;
+		ArrayList<CursoBean> listaCurso=new ArrayList<CursoBean>();
+		listaCurso=dao1.findbyAlumno(LoginUPConsulta.codigoPrincipal);
 		
-		String sql="select nombreCurso from Alumno inner join AlumnoCurso on Alumno.codigoAlumno=AlumnoCurso.codigoAlumno2 "+
-		"inner join Curso on Curso.codigoCurso=AlumnoCurso.codigoCurso2 where Alumno.codigoAlumno='"+LoginUPConsulta.codigoPrincipal+"'";
-		
-		
-		
-		try {
-			s=(Statement)pruebaCn.createStatement();
-			rs=((java.sql.Statement)s).executeQuery(sql);
-			
-			while(rs.next()) {
-				comboBox.addItem(rs.getString(1));
-			}
-			
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		for(CursoBean cur : listaCurso) {
+			comboBox.addItem(cur.getNombreCurso());
 		}
+		
 		
 		//---------------------------------------------------------
 		
@@ -135,35 +133,21 @@ public class panelElegirTaller extends JPanel {
 		comboBox_2.setBounds(522, 49, 81, 20);
 		add(comboBox_2);
 		
-		
+		//------------------------CONECTAR PROFESOR----------------
 		
 		JButton btnBuscar = new JButton("OK");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox_1.setEnabled(true);
-				//------------------------CONECTAR PROFESOR----------------
-				ConexionUPConsulta conexionupc2=new ConexionUPConsulta();
-				Connection pruebaCn2 =conexionupc.getConexion();
 				
-				Statement s2;
-				ResultSet rs2;
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				ProfesorDAO dao1=factory.getProfesorDAO();
 				
-				String sql2="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
-				"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+comboBox.getSelectedItem()+"'";
+				ArrayList<ProfesorBean> listaProfesor=new ArrayList<ProfesorBean>();
+				listaProfesor=dao1.findbyCurso(comboBox.getSelectedItem());
 				
-				//JOptionPane.showMessageDialog(null, comboBox.getSelectedItem());
-				
-				try {
-					s2=(Statement)pruebaCn.createStatement();
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					
-					while(rs2.next()) {
-						comboBox_1.addItem(rs2.getString(1));
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				for(ProfesorBean pro : listaProfesor) {
+					comboBox_1.addItem(pro.getNombreProfesor());
 				}
 				
 				//--------------------------------
@@ -182,28 +166,15 @@ public class panelElegirTaller extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				comboBox_2.setEnabled(true);
 				//------------------------CONECTAR PROFESOR----------------
-				ConexionUPConsulta conexionupc2=new ConexionUPConsulta();
-				Connection pruebaCn2 =conexionupc.getConexion();
 				
-				Statement s2;
-				ResultSet rs2;
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				SedeDAO dao1=factory.getSedeDAO();
 				
-				String sql2="select codigoSede2 from SedeProfesor inner join  Profesor on SedeProfesor.codigoProfesor3=Profesor.codigoProfesor\r\n" + 
-						"inner join Sede on SedeProfesor.codigoSede2=Sede.codigoSede where Profesor.nombreProfesor='"+comboBox_1.getSelectedItem()+"'";
+				ArrayList<SedeBean> listaSede=new ArrayList<SedeBean>();
+				listaSede=dao1.findbyProf(comboBox_1.getSelectedItem());
 				
-			
-				
-				try {
-					s2=(Statement)pruebaCn.createStatement();
-					rs2=((java.sql.Statement)s2).executeQuery(sql2);
-					
-					while(rs2.next()) {
-						comboBox_2.addItem(rs2.getString(1));
-					}
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				for(SedeBean sed : listaSede) {
+					comboBox_2.addItem(sed.getCodigoSede());
 				}
 				
 				//--------------------------------
@@ -233,6 +204,24 @@ public class panelElegirTaller extends JPanel {
 
 				ConexionUPConsulta conexionUPC=new ConexionUPConsulta();
 				Connection pruebaCn=conexionUPC.getConexion();
+				
+				//DAOFactory factory=DAOFactory.getDAOFactory(2);
+				//AulaDAO dao1=factory.getAulaDAO();
+				
+				//ArrayList<AulaBean> listaAula=new ArrayList<AulaBean>();
+				//listaAula=dao1.findbySede(comboBox.getSelectedItem(), comboBox_1.getSelectedItem());
+				
+				//String[] dato=new String[6];
+				//for(int i=0; i<listaAula.size(); i++) {
+					 //dato[0] = listaAula.get(i).getCodigoAula();
+					 //dato[1] = listaAula.get(i).getCodigoSede();
+					 //dato[2] = listaAula.get(i).getNombreDia();
+					 //dato[3] = String.valueOf(listaAula.get(i).getHora());
+					 //dato[4] = String.valueOf(listaAula.get(i).getFin());
+					 //dato[5] = String.valueOf(listaAula.get(i).getAforoAula());
+					 //model.addRow(dato);   
+		        //}
+				
                 Statement s;
 				
 				ResultSet rs;

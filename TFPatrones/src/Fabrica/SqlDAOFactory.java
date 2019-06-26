@@ -1,6 +1,7 @@
 package Fabrica;
 
 import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.AulaDAO;
 import Fabrica.Dao.CursoDAO;
 import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
@@ -9,6 +10,7 @@ import Fabrica.Dao.SedeDAO;
 import Fabrica.Dao.TallerDAO;
 import Fabrica.Dao.TallerVDAO;
 import Fabrica.Dao.Impl.AlumnoDAOImplements;
+import Fabrica.Dao.Impl.AulaDAOImplements;
 import Fabrica.Dao.Impl.CursoDAOImplements;
 import Fabrica.Dao.Impl.ProfesorDAOImplements;
 import Fabrica.Dao.Impl.RecomendacionDAOImplements;
@@ -65,6 +67,12 @@ public class SqlDAOFactory implements DAOFactory {
 	public TallerDAO getTallerDAO() {
 		// TODO Auto-generated method stub
 		return new TallerDAOImplements();
+	}
+
+	@Override
+	public AulaDAO getAulaDAO() {
+		// TODO Auto-generated method stub
+		return new AulaDAOImplements();
 	}
 
 }

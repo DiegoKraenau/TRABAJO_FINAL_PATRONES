@@ -1,6 +1,7 @@
 package Fabrica;
 
 import Fabrica.Dao.AlumnoDAO;
+import Fabrica.Dao.AulaDAO;
 import Fabrica.Dao.CursoDAO;
 import Fabrica.Dao.ProfesorDAO;
 import Fabrica.Dao.RecomendacionDAO;
@@ -58,6 +59,12 @@ public class MsqlDAOFActory implements DAOFactory {
 
 	@Override
 	public TallerDAO getTallerDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AulaDAO getAulaDAO() {
 		// TODO Auto-generated method stub
 		return null;
 	}

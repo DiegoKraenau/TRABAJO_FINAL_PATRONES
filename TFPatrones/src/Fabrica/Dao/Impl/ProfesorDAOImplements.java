@@ -267,4 +267,32 @@ public class ProfesorDAOImplements implements ProfesorDAO {
 		return profesor;
 	}
 
+	@Override
+	public ArrayList<ProfesorBean> findbyCurso(Object nombreCurso) {
+		ArrayList<ProfesorBean> listado = new ArrayList<ProfesorBean>();
+		ProfesorBean profe = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql="select nombreProfesor from Profesor inner join ProfesorCurso on Profesor.codigoProfesor=ProfesorCurso.codigoProfesor2 "+
+					"inner join Curso on Curso.codigoCurso=ProfesorCurso.codigoCurso3 where Curso.nombreCurso='"+nombreCurso+"'";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				profe = new ProfesorBean();
+				profe.setNombreProfesor(rs.getString("nombreProfesor"));
+				listado.add(profe);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return listado;
+	}
+
 }

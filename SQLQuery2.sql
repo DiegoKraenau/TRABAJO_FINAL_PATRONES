@@ -14,8 +14,9 @@ insert into Alumno values('u201710397','diego2009','Diego Kraenau')
 insert into Alumno values('u20171A154','rodolfo2009','Rodolfo Arias')
 insert into Alumno values('u201715840','miguel2009','Miguel Aspilcueta')
 insert into Alumno values('u201621893','carlos2009','Carlos Rodriguez')
-insert into Alumno values('u2017b079','diego2009','Diego Hilario')
+insert into Alumno values('u20171B079','diego2009','Diego Hilario')
 insert into Alumno values('201613518','guillermo2009','Guillermo Rosales')
+
 
 
 create table Curso(
@@ -74,6 +75,12 @@ insert into AlumnoCurso values('u201621893','C002')
 insert into AlumnoCurso values('u201621893','C003')
 insert into AlumnoCurso values('u201621893','C008')
 insert into AlumnoCurso values('u201621893','C011')
+
+insert into AlumnoCurso values('u20171B079','C002')
+insert into AlumnoCurso values('u20171B079','C006')
+insert into AlumnoCurso values('u20171B079','C007')
+insert into AlumnoCurso values('u20171B079','C008')
+insert into AlumnoCurso values('u20171B079','C009')
 
 create table Profesor(
 codigoProfesor varchar(20) primary key,
@@ -149,6 +156,7 @@ FOREIGN KEY (codigoSede2) references Sede(codigoSede),
 
 insert into SedeProfesor values('P001','Villa')
 insert into SedeProfesor values('P001','Monterrico')
+insert into SedeProfesor values('P002','Villa')
 
 
 

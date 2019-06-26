@@ -129,4 +129,32 @@ public class SedeDAOImplements implements SedeDAO {
 		return lista;
 	}
 
+	@Override
+	public ArrayList<SedeBean> findbyProf(Object nombreProf) {
+		ArrayList<SedeBean> listado = new ArrayList<SedeBean>();
+		SedeBean sede = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql="select codigoSede from Sede inner join SedeProfesor on Sede.codigoSede=SedeProfesor.codigoSede2 "+
+					"inner join Profesor on Profesor.codigoProfesor=SedeProfesor.codigoProfesor3 where Profesor.nombreProfesor='"+nombreProf+"'";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				sede = new SedeBean();
+				sede.setCodigoSede(rs.getString("codigoSede"));
+				listado.add(sede);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return listado;
+	}
+
 }

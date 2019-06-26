@@ -183,4 +183,32 @@ public class CursoDAOImplements implements CursoDAO {
 		return curso;
     }
 
+	@Override
+	public ArrayList<CursoBean> findbyAlumno(String codigoAlumno) {
+		ArrayList<CursoBean> listado = new ArrayList<CursoBean>();
+		CursoBean curso = null;
+		Connection con = null;
+		PreparedStatement pr = null;
+		ResultSet rs = null;
+		try {
+			con=getConnection();
+			String sql="select nombreCurso from Alumno inner join AlumnoCurso on Alumno.codigoAlumno=AlumnoCurso.codigoAlumno2 "+
+					"inner join Curso on Curso.codigoCurso=AlumnoCurso.codigoCurso2 where Alumno.codigoAlumno='"+codigoAlumno+"'";
+			pr = con.prepareStatement(sql);
+			rs = pr.executeQuery();
+			while(rs.next()){
+				curso = new CursoBean();
+				curso.setNombreCurso(rs.getString("nombreCurso"));
+				listado.add(curso);
+			}
+			rs.close();
+			pr.close();
+			con.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.print(e);
+		}
+		return listado;
+	}
+
 }
