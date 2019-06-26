@@ -12,6 +12,7 @@ import Fabrica.Dao.RecomendacionDAO;
 import Persistencia.RecomendacionBean;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.sql.Connection;
@@ -85,11 +86,40 @@ public class panelVisualizar extends JPanel {
 		add(lblMisRecomendaciones);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
+			}
+		});
 		btnEditar.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnEditar.setBounds(170, 348, 101, 23);
 		add(btnEditar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DAOFactory factory=DAOFactory.getDAOFactory(2);
+				RecomendacionDAO dao1=factory.getRecomendacionDAO();
+			
+				int op;
+				op=JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminarlo?:");
+
+				
+				if(op==0) {
+					String cod;
+					cod= (String) table_1.getValueAt(table_1.getSelectedRow(), table_1.getSelectedColumn());
+				
+					dao1.delete(cod);
+				}
+				
+			
+				
+				
+			}
+		});
 		btnEliminar.setFont(new Font("Rockwell", Font.BOLD, 13));
 		btnEliminar.setBounds(371, 348, 108, 23);
 		add(btnEliminar);
