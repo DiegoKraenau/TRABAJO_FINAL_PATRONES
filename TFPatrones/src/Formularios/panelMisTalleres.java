@@ -51,8 +51,9 @@ public class panelMisTalleres extends JPanel {
 		model.addColumn("Sede");
 		model.addColumn("Curso");
 		model.addColumn("Aula");
+		model.addColumn("Vacantes");
 		
-		String[] dato=new String[8];
+		String[] dato=new String[9];
 		
 		table = new JTable();
 		table.setBounds(28, 95, 602, 246);
@@ -83,6 +84,7 @@ public class panelMisTalleres extends JPanel {
 			CursoBean cur = dao3.findById(tallerBean.codigoCurso);
 			dato[6]= cur.nombreCurso;
 			dato[7]= tallerBean.codigoAula;
+			dato[8]= Integer.toString(tallerBean.vacantes);
 			model.addRow(dato);
 		}
 		
@@ -111,6 +113,7 @@ public class panelMisTalleres extends JPanel {
 					CursoBean cur = dao3.findById(tallerBean.codigoCurso);
 					dato[6]= cur.nombreCurso;
 					dato[7]= tallerBean.codigoAula;
+					dato[8]= Integer.toString(tallerBean.vacantes);
 					model.addRow(dato);
 				}
 			}
@@ -127,23 +130,23 @@ public class panelMisTalleres extends JPanel {
 		add(lblId);
 		
 		JLabel lblFecha = new JLabel("Fecha");
-		lblFecha.setBounds(119, 77, 46, 14);
+		lblFecha.setBounds(99, 77, 46, 14);
 		add(lblFecha);
 		
 		JLabel lblHora = new JLabel("Hora");
-		lblHora.setBounds(192, 77, 46, 14);
+		lblHora.setBounds(169, 77, 46, 14);
 		add(lblHora);
 		
 		JLabel lblProfesor = new JLabel("Profesor");
-		lblProfesor.setBounds(257, 77, 101, 14);
+		lblProfesor.setBounds(227, 77, 101, 14);
 		add(lblProfesor);
 		
 		JLabel lblDuracion = new JLabel("Duracion");
-		lblDuracion.setBounds(331, 77, 101, 14);
+		lblDuracion.setBounds(302, 77, 101, 14);
 		add(lblDuracion);
 		
 		JLabel lblSede = new JLabel("Sede");
-		lblSede.setBounds(413, 77, 46, 14);
+		lblSede.setBounds(375, 77, 46, 14);
 		add(lblSede);
 		
 		JButton btnF = new JButton("F5");
@@ -169,6 +172,7 @@ public class panelMisTalleres extends JPanel {
 					CursoBean cur = dao3.findById(tallerBean.codigoCurso);
 					dato[6]= cur.nombreCurso;
 					dato[7]= tallerBean.codigoAula;
+					dato[8]= Integer.toString(tallerBean.vacantes);
 					model.addRow(dato);
 				}
 			}
@@ -177,12 +181,16 @@ public class panelMisTalleres extends JPanel {
 		add(btnF);
 		
 		JLabel lblCurso = new JLabel("Curso");
-		lblCurso.setBounds(482, 77, 46, 14);
+		lblCurso.setBounds(442, 77, 46, 14);
 		add(lblCurso);
 		
 		JLabel lblAula = new JLabel("Aula");
-		lblAula.setBounds(568, 77, 46, 14);
+		lblAula.setBounds(508, 77, 46, 14);
 		add(lblAula);
+		
+		JLabel lblVacantes = new JLabel("Vacantes");
+		lblVacantes.setBounds(568, 77, 83, 14);
+		add(lblVacantes);
 
 	}
 }

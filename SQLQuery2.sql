@@ -220,6 +220,7 @@ codigoAula varchar(20),
 codigoCurso varchar(20),
 duracionTaller int,
 codigoSede varchar(20),
+vacantes int,
 
 FOREIGN KEY (codigoProfesor) references Profesor(codigoProfesor),
 FOREIGN KEY (codigoSede) references Sede(codigoSede),
@@ -237,10 +238,10 @@ FOREIGN KEY (codigoAlumno) references Alumno(codigoAlumno)
 --DROP TABLE TallerAlumno
 --DROP TABLE Taller
 
---Select * From TallerAlumno
+--Select * From Taller
 --Select * From Aula
 
---INSERT INTO Taller Values('2019-06-06','13:00','P001','H205','C008','2','Villa')
+--INSERT INTO Taller Values('2019-06-06','10:00','P001','H205','C008','1','Villa','40')
 --SELECT * FROM Taller
 --INSERT INTO TallerAlumno Values(2,'u20171A154')
 --SELECT * FROM TallerAlumno
