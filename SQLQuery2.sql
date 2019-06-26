@@ -207,7 +207,7 @@ UPDATE Alumno Set contraseñaAlumno = 123 wHERE codigoAlumno = 'u20171A154'
 SELECT * FROM Alumno
 
 
-INSERT INTO Alumno Values('u201710','123','Rodolfo fake')
+--INSERT INTO Alumno Values('u201710','123','Rodolfo fake')
 
 
 
@@ -216,13 +216,15 @@ codigoTaller int Primary KEY IDENTITY(1,1),
 fechaTaller Date,
 horaTaller varchar(30),
 codigoProfesor varchar(20),
+codigoAula varchar(20),
 codigoCurso varchar(20),
 duracionTaller int,
 codigoSede varchar(20),
 
 FOREIGN KEY (codigoProfesor) references Profesor(codigoProfesor),
 FOREIGN KEY (codigoSede) references Sede(codigoSede),
-FOREIGN KEY (codigoCurso) references Curso(codigoCurso)
+FOREIGN KEY (codigoCurso) references Curso(codigoCurso),
+FOREIGN KEY (codigoAula) references Aula(codigoAula)
 )
 
 create table TallerAlumno(
@@ -236,9 +238,9 @@ FOREIGN KEY (codigoAlumno) references Alumno(codigoAlumno)
 --DROP TABLE Taller
 
 --Select * From TallerAlumno
---Select * From Curso
+--Select * From Aula
 
---INSERT INTO Taller Values('2019-06-06','10:00','P001','C008','4','Villa')
+--INSERT INTO Taller Values('2019-06-06','13:00','P001','H205','C008','2','Villa')
 --SELECT * FROM Taller
 --INSERT INTO TallerAlumno Values(2,'u20171A154')
 --SELECT * FROM TallerAlumno

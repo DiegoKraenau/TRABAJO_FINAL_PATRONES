@@ -12,6 +12,7 @@ public class TallerBean implements Serializable {
 	public int duracionTaller;
 	public String codigoSede;
 	public String codigoCurso;
+	public String codigoAula;
 	
 	public int getCodigoTaller() {
 		return codigoTaller;
@@ -54,5 +55,11 @@ public class TallerBean implements Serializable {
 	}
 	public void setCodigoCurso(String codigoCurso) {
 		this.codigoCurso = codigoCurso;
+	}
+	public String getCodigoAula() {
+		return codigoAula;
+	}
+	public void setCodigoAula(String codigoAula) {
+		this.codigoAula = codigoAula;
 	}
 }

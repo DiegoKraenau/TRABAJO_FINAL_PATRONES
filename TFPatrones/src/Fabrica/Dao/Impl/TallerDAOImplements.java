@@ -77,7 +77,7 @@ public class TallerDAOImplements implements TallerDAO {
 		ResultSet rs = null;
 		try {
 			con=getConnection();
-			String sql = "Select t.codigoTaller, t.fechaTaller, t.horaTaller, t.codigoProfesor, t.duracionTaller, t.codigoSede, t.codigoCurso from Taller t INNER JOIN TallerAlumno ta on t.codigoTaller = ta.codigoTaller WHERE ta.codigoAlumno = '"+codigoAlumno+"'";
+			String sql = "Select t.codigoTaller, t.fechaTaller, t.horaTaller, t.codigoProfesor, t.duracionTaller, t.codigoSede, t.codigoCurso, t.codigoAula from Taller t INNER JOIN TallerAlumno ta on t.codigoTaller = ta.codigoTaller WHERE ta.codigoAlumno = '"+codigoAlumno+"'";
 			pr = con.prepareStatement(sql);
 			rs = pr.executeQuery();
 			while(rs.next()){
@@ -89,6 +89,7 @@ public class TallerDAOImplements implements TallerDAO {
 				taller.setDuracionTaller(rs.getInt("duracionTaller"));
 				taller.setCodigoSede(rs.getString("codigoSede"));
 				taller.setCodigoCurso(rs.getString("codigoCurso"));
+				taller.setCodigoAula(rs.getString("codigoAula"));
 				listado.add(taller);
 			}
 			rs.close();
