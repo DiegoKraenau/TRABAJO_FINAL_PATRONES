@@ -53,7 +53,7 @@ public class panelVisualizar extends JPanel {
 		
 		
 		table_1 = new JTable();
-		table_1.setBounds(54, 75, 520, 249);
+		table_1.setBounds(54, 93, 520, 231);
 		add(table_1);
 		
 		table_1.setModel(model);
@@ -85,19 +85,11 @@ public class panelVisualizar extends JPanel {
 		lblMisRecomendaciones.setBounds(245, 16, 146, 14);
 		add(lblMisRecomendaciones);
 		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-			}
-		});
-		btnEditar.setFont(new Font("Rockwell", Font.BOLD, 13));
-		btnEditar.setBounds(170, 348, 101, 23);
-		add(btnEditar);
+		JLabel lblSiDeseasRetirar = new JLabel("Si deseas borrar tu recomendaci\u00F3n, seleccionala y de click en borrar.");
+		lblSiDeseasRetirar.setBounds(64, 336, 890, 44);
+		add(lblSiDeseasRetirar);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		JButton btnEliminar = new JButton("Borrar");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -135,7 +127,7 @@ public class panelVisualizar extends JPanel {
 			}
 		});
 		btnEliminar.setFont(new Font("Rockwell", Font.BOLD, 13));
-		btnEliminar.setBounds(371, 348, 108, 23);
+		btnEliminar.setBounds(481, 346, 93, 23);
 		add(btnEliminar);
 		
 		JLabel lblResultados = new JLabel("Resultados:");
@@ -177,6 +169,26 @@ public class panelVisualizar extends JPanel {
 		});
 		btnF.setBounds(543, 13, 60, 23);
 		add(btnF);
+		
+		JLabel lblId = new JLabel("Id");
+		lblId.setBounds(80, 75, 46, 14);
+		add(lblId);
+		
+		JLabel lblProfesor = new JLabel("Profesor");
+		lblProfesor.setBounds(181, 75, 75, 14);
+		add(lblProfesor);
+		
+		JLabel lblCurso = new JLabel("Curso");
+		lblCurso.setBounds(289, 75, 46, 14);
+		add(lblCurso);
+		
+		JLabel lblPuntaje = new JLabel("Puntaje");
+		lblPuntaje.setBounds(399, 75, 60, 14);
+		add(lblPuntaje);
+		
+		JLabel lblDescripcion = new JLabel("Descripcion");
+		lblDescripcion.setBounds(490, 75, 108, 14);
+		add(lblDescripcion);
 
 	}
 }

@@ -142,7 +142,7 @@ public class LoginAlumno extends JFrame implements ActionListener {
 		panel_1.setLayout(null);
 		panel_1.add(btnNewButton);
 		
-		JButton btnVisualizarRecomendacin = new JButton("Visualizar Recomendaci\u00F3n");
+		JButton btnVisualizarRecomendacin = new JButton("Mis recomendaciones");
 		btnVisualizarRecomendacin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelGeneral.add(p3);
